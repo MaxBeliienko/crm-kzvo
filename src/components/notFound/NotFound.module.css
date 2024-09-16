@@ -1,0 +1,29 @@
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f0eff4;
+  color: #323f47;
+}
+
+.notFoundTitle {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  animation: float 2s ease-in-out infinite;
+}
+
+.notFoundMessage {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.redirectMessage {
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: #ef5050;
+  margin-bottom: 2rem;
+}
