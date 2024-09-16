@@ -1,0 +1,4 @@
+.stat-list-container {
+  display: flex;
+  gap: 5px;
+}

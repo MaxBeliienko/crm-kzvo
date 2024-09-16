@@ -5,3 +5,8 @@
 .main-content {
   flex-grow: 1;
 }
+
+/* Стилі для контейнера сторінки */
+.page-container {
+  padding: 15px 10px;
+}
