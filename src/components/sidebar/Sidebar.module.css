@@ -10,7 +10,7 @@
   box-shadow: 0 10px 60px 0 rgba(226, 236, 249, 0.5);
 }
 
-.sidebar-main-list {
+.sidebar-menu-list {
   width: 100%;
 }
 
@@ -38,4 +38,8 @@
   padding: 10px;
   color: #007bff;
   font-weight: bold;
+}
+
+.del-padding-left {
+  padding-left: 0;
 }

@@ -16,8 +16,8 @@ const Sidebar = () => {
       <span className={styles['sidebar-span-title']}>
         {t('description.sidebar.Menu')}
       </span>
-      <ul className={styles['sidebar-main-list']}>
-        <li className={styles['sidebar-main-item']}>
+      <ul className={styles['sidebar-menu-list']}>
+        <li className={styles['sidebar-menu-item']}>
           <span
             onClick={toggleDashboard}
             className={isDashboardOpen ? styles.activeItem : undefined}
@@ -50,6 +50,36 @@ const Sidebar = () => {
             </ul>
           )}
         </li>
+      </ul>
+      <span className={styles['sidebar-span-title']}>
+        {t('description.sidebar.Products')}
+      </span>
+      <ul>
+        <li>
+          <NavLink
+            to="/products-description"
+            className={({ isActive }) =>
+              `${isActive ? styles.activeLink : styles.inactiveLink} ${
+                styles['del-padding-left']
+              }`
+            }
+          >
+            Product description
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/goods-description"
+            className={({ isActive }) =>
+              `${isActive ? styles.activeLink : styles.inactiveLink} ${
+                styles['del-padding-left']
+              }`
+            }
+          >
+            Product description
+          </NavLink>
+        </li>
+        <li></li>
       </ul>
     </nav>
   );

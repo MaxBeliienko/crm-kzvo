@@ -4,12 +4,14 @@ export const sidebarText = {
     Dashboard: 'Dashboard',
     Homepage: 'Homepage',
     SalesAnalytics: 'Sales analytics',
+    Products: 'PRODUCTS',
   },
   ukr: {
     Menu: 'МЕНЮ',
     Dashboard: 'Панель',
     Homepage: 'Домашня сторінка',
     SalesAnalytics: 'Аналітика продажів',
+    Products: 'ПРОДУКТИ',
   },
 };
 
