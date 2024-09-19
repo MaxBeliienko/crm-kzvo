@@ -1,12 +1,21 @@
 import styles from './GoodsTable.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods } from '../../redux/goods/operations';
+import {
+  fetchGoods,
+  updateGoods,
+  deleteGoods,
+  addGoods,
+} from '../../redux/goods/operations';
 import {
   selectGoods,
   selectGoodsLoading,
   selectGoodsError,
 } from '../../redux/goods/selectors';
+import Modal from '../modal/Modal';
+import ViewGoods from '../viewGoods/ViewGoods';
+import EditGoods from '../editGoods/EditGoods';
+import RemoveGoods from '../removeGoods/RemoveGoods';
 
 const GoodsTable = () => {
   const dispatch = useDispatch();
@@ -74,10 +83,31 @@ const GoodsTable = () => {
     setMenuOpen(menuOpen === id ? null : id);
   };
 
+  // Логіка для рендерингу в залежності від обраного списку випадаючого меню
+  const [selectedGoods, setSelectedGoods] = useState(null); // Для зберігання вибраного товару
+  const [modalType, setModalType] = useState(null); // Для відстеження активної модалки
+
   const handleAction = (action, product) => {
-    console.log(`${action} action for product:`, product);
+    setSelectedGoods(product);
+    setModalType(action);
     setMenuOpen(null);
-    // Надалі тут буде логіка длі View, Edit...
+  };
+
+  // Dispatch для зберігання змін після редагування
+  const handleEditSave = updateProducts => {
+    dispatch(
+      updateGoods({
+        databaseId: 1,
+        goodsId: selectGoods.id,
+        goodsData: updateProducts,
+      })
+    );
+    setModalType(null);
+  };
+
+  const handleDeleteConfirm = () => {
+    dispatch(deleteGoods({ databaseId: 1, goodsId: selectGoods.id }));
+    setModalType(null);
   };
 
   let content;
@@ -168,6 +198,28 @@ const GoodsTable = () => {
         </div>
       </div>
       {content}
+      <button onClick={() => setModalType('View')}>Open View Modal</button>
+
+      {/* Модальні вікна */}
+      {modalType === 'View' && (
+        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
+          <ViewGoods product={selectedGoods} />
+        </Modal>
+      )}
+      {modalType === 'Edit' && (
+        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
+          <EditGoods product={selectedGoods} onSave={handleEditSave} />
+        </Modal>
+      )}
+      {modalType === 'Remove' && (
+        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
+          <RemoveGoods
+            product={selectedGoods}
+            onConfirm={handleDeleteConfirm}
+            onCancel={() => setModalType(null)}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
