@@ -16,6 +16,7 @@ import Modal from '../modal/Modal';
 import ViewGoods from '../viewGoods/ViewGoods';
 import EditGoods from '../editGoods/EditGoods';
 import RemoveGoods from '../removeGoods/RemoveGoods';
+import AddProduct from '../addProduct/AddProduct';
 
 const GoodsTable = () => {
   const dispatch = useDispatch();
@@ -94,20 +95,22 @@ const GoodsTable = () => {
   };
 
   // Dispatch для зберігання змін після редагування
-  const handleEditSave = updateProducts => {
-    dispatch(
-      updateGoods({
-        databaseId: 1,
-        goodsId: selectGoods.id,
-        goodsData: updateProducts,
-      })
-    );
-    setModalType(null);
-  };
+  // const handleEditSave = updateProducts => {
+  //   dispatch(
+  //     updateGoods({
+  //       databaseId: 1,
+  //       goodsId: selectedGoods.id,
+  //       goodsData: updateProducts,
+  //     })
+  //   );
+  //   setModalType(null);
+  // };
 
   const handleDeleteConfirm = () => {
-    dispatch(deleteGoods({ databaseId: 1, goodsId: selectGoods.id }));
+    console.log(selectGoods);
+    dispatch(deleteGoods({ databaseId: 1, goodsId: selectedGoods.id }));
     setModalType(null);
+    console.log(selectGoods.id);
   };
 
   let content;
@@ -122,11 +125,11 @@ const GoodsTable = () => {
         <thead>
           <tr>
             <td>Name</td>
-            <td>Code</td>
-            <td>Image</td>
+            <td>Precode</td>
             <td>Price</td>
-            <td>Weight</td>
-            <td>Tara weight</td>
+            <td>Code</td>
+            <td>pcsGood</td>
+            <td>idSection</td>
             <td>Action</td>
           </tr>
         </thead>
@@ -135,16 +138,17 @@ const GoodsTable = () => {
             <tr key={product.id}>
               <td>{product.name}</td>
               <td>{product.precode}</td>
-              <td>
+              {/* <td>
                 <img
                   src={base64ToImageUrl(product.image)}
                   alt={product.name}
                   style={{ width: '50px', height: '50px' }}
                 />
-              </td>
+              </td> */}
               <td>{product.price}</td>
-              <td>{product.weight}</td>
-              <td>{product.taraWeight}</td>
+              <td>{product.code}</td>
+              <td>{product.pcsGood}</td>
+              <td>{product.idSection}</td>
               <td>
                 <button onClick={() => handleMenuToggle(product.id)}>
                   ...
@@ -178,7 +182,7 @@ const GoodsTable = () => {
         <div className={styles['goods-table-info-text']}>
           <h2 className={styles['goods-table-title']}>All goods</h2>
         </div>
-        <div>
+        <div className={styles['goods-table-filter-wrap']}>
           <input
             className={styles['goods-table-search-input']}
             type="text"
@@ -191,14 +195,21 @@ const GoodsTable = () => {
             onChange={e => setSortKey(e.target.value)}
           >
             <option value="name">Name</option>
-            <option value="precode">Code</option>
+            <option value="precode">Precode</option>
             <option value="price">Price</option>
-            <option value="weight">Weight</option>
+            <option value="code">Code</option>
+            <option value="pcsGood">pcsGood</option>
+            <option value="idSection">Id section</option>
           </select>
+          <button
+            onClick={() => setModalType('Add')}
+            className={styles['add-product-button']}
+          >
+            Add product
+          </button>
         </div>
       </div>
       {content}
-      <button onClick={() => setModalType('View')}>Open View Modal</button>
 
       {/* Модальні вікна */}
       {modalType === 'View' && (
@@ -208,7 +219,10 @@ const GoodsTable = () => {
       )}
       {modalType === 'Edit' && (
         <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
-          <EditGoods product={selectedGoods} onSave={handleEditSave} />
+          <EditGoods
+            product={selectedGoods}
+            onClose={() => setModalType(null)}
+          />
         </Modal>
       )}
       {modalType === 'Remove' && (
@@ -218,6 +232,11 @@ const GoodsTable = () => {
             onConfirm={handleDeleteConfirm}
             onCancel={() => setModalType(null)}
           />
+        </Modal>
+      )}
+      {modalType === 'Add' && (
+        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
+          <AddProduct onClose={() => setModalType(null)} />
         </Modal>
       )}
     </div>

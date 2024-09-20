@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
-import { updateGoods } from '../../redux/goods/operations';
+import { addGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
 import { useId } from 'react';
 
@@ -21,7 +21,24 @@ const FeedbackSchema = Yup.object().shape({
   taraWeight: Yup.number(),
 });
 
-const EditGoods = ({ product, onClose }) => {
+const initialValues = {
+  name: '',
+  price: '',
+  code: '',
+  precode: '',
+  pcsGood: false,
+  idSection: '',
+  idTemplate: '',
+  barcodeCoding: '',
+  description: '',
+  before_validity: '',
+  type: '',
+  image: '',
+  weight: 1,
+  taraWeight: '',
+};
+
+const AddProduct = ({ onClose }) => {
   const productNameId = useId();
   const productPriceId = useId();
   const productCodeId = useId();
@@ -37,45 +54,9 @@ const EditGoods = ({ product, onClose }) => {
   const productWeightId = useId();
   const productTaraWeightId = useId();
 
-  const {
-    name,
-    precode,
-    price,
-    image,
-    weight,
-    taraWeight,
-    code,
-    pcsGood,
-    type,
-    before_validity,
-    description,
-    barcodeCoding,
-    idSection,
-    idTemplate,
-  } = product;
-
-  const initialValues = {
-    name: name,
-    price: price,
-    code: code,
-    precode: precode,
-    pcsGood: pcsGood,
-    idSection: idSection,
-    idTemplate: idTemplate,
-    barcodeCoding: barcodeCoding,
-    description: description,
-    before_validity: before_validity,
-    type: type,
-    image: image,
-    weight: weight,
-    taraWeight: taraWeight,
-  };
-
   const dispatch = useDispatch();
   const handleSubmit = (values, actions) => {
-    dispatch(
-      updateGoods({ databaseId: 1, goodsId: product.id, goodsData: values })
-    );
+    dispatch(addGoods({ databaseId: 1, goodsData: values }));
     onClose();
   };
 
@@ -177,4 +158,4 @@ const EditGoods = ({ product, onClose }) => {
   );
 };
 
-export default EditGoods;
+export default AddProduct;
