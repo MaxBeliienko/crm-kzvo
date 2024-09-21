@@ -3,6 +3,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import ModalManager from './components/ModalManager';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SalesAnalytics = lazy(() => import('./pages/SalesAnalytics'));
@@ -27,6 +28,7 @@ function App() {
             <Route path="/goods-description" element={<GoodsDescription />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ModalManager />
         </div>
       </div>
     </Suspense>

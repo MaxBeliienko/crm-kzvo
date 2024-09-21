@@ -2,22 +2,13 @@ import styles from './GoodsTable.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchGoods,
-  updateGoods,
-  deleteGoods,
-  addGoods,
-} from '../../redux/goods/operations';
+import { fetchGoods } from '../../redux/goods/operations';
 import {
   selectGoods,
   selectGoodsLoading,
   selectGoodsError,
 } from '../../redux/goods/selectors';
-import Modal from '../modal/Modal';
-import ViewGoods from '../viewGoods/ViewGoods';
-import EditGoods from '../editGoods/EditGoods';
-import RemoveGoods from '../removeGoods/RemoveGoods';
-import AddProduct from '../addProduct/AddProduct';
+import { openModal } from '../../redux/modal/slice';
 
 const GoodsTable = () => {
   const dispatch = useDispatch();
@@ -86,33 +77,9 @@ const GoodsTable = () => {
     setMenuOpen(menuOpen === id ? null : id);
   };
 
-  // Логіка для рендерингу в залежності від обраного списку випадаючого меню
-  const [selectedGoods, setSelectedGoods] = useState(null); // Для зберігання вибраного товару
-  const [modalType, setModalType] = useState(null); // Для відстеження активної модалки
-
-  const handleAction = (action, product) => {
-    setSelectedGoods(product);
-    setModalType(action);
+  const handleAction = (actionType, product) => {
+    dispatch(openModal({ modalType: actionType, modalProps: { product } }));
     setMenuOpen(null);
-  };
-
-  // Dispatch для зберігання змін після редагування
-  // const handleEditSave = updateProducts => {
-  //   dispatch(
-  //     updateGoods({
-  //       databaseId: 1,
-  //       goodsId: selectedGoods.id,
-  //       goodsData: updateProducts,
-  //     })
-  //   );
-  //   setModalType(null);
-  // };
-
-  const handleDeleteConfirm = () => {
-    console.log(selectGoods);
-    dispatch(deleteGoods({ databaseId: 1, goodsId: selectedGoods.id }));
-    setModalType(null);
-    console.log(selectGoods.id);
   };
 
   let content;
@@ -158,13 +125,15 @@ const GoodsTable = () => {
                 {menuOpen === product.id && (
                   <div ref={menuRef} className={styles['dropdown-menu']}>
                     <ul>
-                      <li onClick={() => handleAction('View', product)}>
+                      <li onClick={() => handleAction('viewProduct', product)}>
                         {t('description.goodsTable.View')}
                       </li>
-                      <li onClick={() => handleAction('Edit', product)}>
+                      <li onClick={() => handleAction('editProduct', product)}>
                         {t('description.goodsTable.Edit')}
                       </li>
-                      <li onClick={() => handleAction('Remove', product)}>
+                      <li
+                        onClick={() => handleAction('removeProduct', product)}
+                      >
                         {t('description.goodsTable.Remove')}
                       </li>
                     </ul>
@@ -198,51 +167,28 @@ const GoodsTable = () => {
             className={styles['goods-table-select']}
             onChange={e => setSortKey(e.target.value)}
           >
-            <option value="name">Name</option>
-            <option value="precode">Precode</option>
-            <option value="price">Price</option>
-            <option value="code">Code</option>
-            <option value="pcsGood">pcsGood</option>
-            <option value="idSection">Id section</option>
+            <option value="name">{t('description.goodsTable.Name')}</option>
+            <option value="precode">
+              {t('description.goodsTable.Precode')}
+            </option>
+            <option value="price">{t('description.goodsTable.Price')}</option>
+            <option value="code">{t('description.goodsTable.Code')}</option>
+            <option value="pcsGood">
+              {t('description.goodsTable.PcsGood')}
+            </option>
+            <option value="idSection">
+              {t('description.goodsTable.IdSection')}
+            </option>
           </select>
           <button
-            onClick={() => setModalType('Add')}
+            onClick={() => handleAction('addProduct', null)}
             className={styles['add-product-button']}
           >
-            Add product
+            {t('description.goodsTable.AddProduct')}
           </button>
         </div>
       </div>
       {content}
-
-      {/* Модальні вікна */}
-      {modalType === 'View' && (
-        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
-          <ViewGoods product={selectedGoods} />
-        </Modal>
-      )}
-      {modalType === 'Edit' && (
-        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
-          <EditGoods
-            product={selectedGoods}
-            onClose={() => setModalType(null)}
-          />
-        </Modal>
-      )}
-      {modalType === 'Remove' && (
-        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
-          <RemoveGoods
-            product={selectedGoods}
-            onConfirm={handleDeleteConfirm}
-            onCancel={() => setModalType(null)}
-          />
-        </Modal>
-      )}
-      {modalType === 'Add' && (
-        <Modal isOpen={!!modalType} onClose={() => setModalType(null)}>
-          <AddProduct onClose={() => setModalType(null)} />
-        </Modal>
-      )}
     </div>
   );
 };

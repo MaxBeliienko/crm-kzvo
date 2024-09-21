@@ -4,6 +4,7 @@ import AddProduct from './addProduct/AddProduct';
 import EditGoods from './editGoods/EditGoods';
 import RemoveGoods from './removeGoods/RemoveGoods';
 import ViewGoods from './viewGoods/ViewGoods';
+import { closeModal } from '../redux/modal/slice';
 
 const ModalManager = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,19 @@ const ModalManager = () => {
     case 'editProduct':
       return (
         <Modal onClose={handleClose}>
-          <EditGoods {...modalProps} />
+          <EditGoods onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'viewProduct':
+      return (
+        <Modal onClose={handleClose}>
+          <ViewGoods {...modalProps} />
+        </Modal>
+      );
+    case 'removeProduct':
+      return (
+        <Modal onClose={handleClose}>
+          <RemoveGoods onClose={handleClose} {...modalProps} />
         </Modal>
       );
 

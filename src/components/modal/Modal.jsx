@@ -3,8 +3,6 @@ import styles from './Modal.module.css';
 import { IoIosClose } from 'react-icons/io';
 
 const Modal = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null; // Якщо вікно не має бути відкрите, не рендеримо нічого
-
   // Закриття модалки по клавіші Esc
   useEffect(() => {
     const handleEscape = event => {

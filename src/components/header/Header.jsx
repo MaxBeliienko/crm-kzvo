@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+
 import LocalizationSwitcher from '../localizationSwitcher/LocalizationSwitcher';
 import DropdownMenu from '../dropdownMenu/DropdownMenu';
 import styles from './Header.module.css';
@@ -54,7 +55,7 @@ const Header = () => {
           <FiBell />
         </button>
       </div>
-      {isMenuOpen && <DropdownMenu menuRef={menuRef} />}
+      {isMenuOpen && <DropdownMenu closeMenu={toggleMenu} menuRef={menuRef} />}
     </header>
   );
 };
