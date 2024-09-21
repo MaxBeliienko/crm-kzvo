@@ -53,7 +53,12 @@
   border-collapse: collapse;
 }
 
-th,
+.goods-table-wrapper > table > thead > tr > th:first-child,
+.goods-table-wrapper > table > tbody > tr > td:first-child {
+  width: 350px;
+  max-width: 350px;
+}
+
 td {
   padding: 10px 10px;
   text-align: left;

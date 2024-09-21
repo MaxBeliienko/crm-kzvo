@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
 import { addGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -16,26 +16,27 @@ const FeedbackSchema = Yup.object().shape({
   description: Yup.string(),
   before_validity: Yup.number(),
   type: Yup.string(),
-  image: Yup.array().of(Yup.string()),
+  // image: Yup.array().of(Yup.string()),
+  image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
 
 const initialValues = {
   name: '',
-  price: '',
-  code: '',
-  precode: '',
+  price: 0,
+  code: 0,
+  precode: 0,
   pcsGood: false,
-  idSection: '',
-  idTemplate: '',
+  idSection: 0,
+  idTemplate: 0,
   barcodeCoding: '',
   description: '',
-  before_validity: '',
+  before_validity: 0,
   type: '',
   image: '',
   weight: 1,
-  taraWeight: '',
+  taraWeight: 0,
 };
 
 const AddProduct = ({ onClose }) => {
@@ -55,105 +56,120 @@ const AddProduct = ({ onClose }) => {
   const productTaraWeightId = useId();
 
   const dispatch = useDispatch();
+
+  const loadSavedValues = () => {
+    const savedValues = localStorage.getItem('addProductForm');
+    return savedValues ? JSON.parse(savedValues) : initialValues;
+  };
+
   const handleSubmit = (values, actions) => {
     dispatch(addGoods({ databaseId: 1, goodsData: values }));
+    localStorage.removeItem('addProductForm');
     onClose();
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={loadSavedValues()}
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <div>
-          <label htmlFor={productNameId}>Name</label>
-          <Field type="text" name="name" id={productNameId} />
-          <ErrorMessage name="name" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPriceId}>Price</label>
-          <Field type="number" name="price" id={productPriceId} />
-          <ErrorMessage name="price" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productCodeId}>Code</label>
-          <Field type="number" name="code" id={productCodeId} />
-          <ErrorMessage name="code" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPrecodeId}>Precode</label>
-          <Field type="number" name="precode" id={productPrecodeId} />
+      {({ values, setValues }) => {
+        // Зберігаємо дані в localStorage при зміні полів
+        useEffect(() => {
+          localStorage.setItem('addProductForm', JSON.stringify(values));
+        }, [values]);
+        return (
+          <Form>
+            <div>
+              <label htmlFor={productNameId}>Name</label>
+              <Field type="text" name="name" id={productNameId} />
+              <ErrorMessage name="name" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productPriceId}>Price</label>
+              <Field type="number" name="price" id={productPriceId} />
+              <ErrorMessage name="price" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productCodeId}>Code</label>
+              <Field type="number" name="code" id={productCodeId} />
+              <ErrorMessage name="code" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productPrecodeId}>Precode</label>
+              <Field type="number" name="precode" id={productPrecodeId} />
 
-          <ErrorMessage name="precode" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPcsGoodId}>By weight or piece</label>
-          <Field type="boolean" name="pcsGood" id={productPcsGoodId} />
-          <ErrorMessage name="pcsGood" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productIdSectionId}>Id section</label>
-          <Field type="number" name="idSection" id={productIdSectionId} />
-          <ErrorMessage name="idSection" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productIdTemplateId}>Id template</label>
-          <Field type="number" name="idTemplate" id={productIdTemplateId} />
-          <ErrorMessage name="idTemplate" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productBarcodeCodingId}>Barcode</label>
-          <Field
-            type="string"
-            name="barcodeCoding"
-            id={productBarcodeCodingId}
-          />
-          <ErrorMessage name="barcodeCoding" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productDescriptionId}>Description</label>
-          <Field
-            as="textarea"
-            cols="20"
-            rows="5"
-            name="description"
-            id={productDescriptionId}
-          />
-          <ErrorMessage name="description" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productBeforeValidityId}>Before validity</label>
-          <Field
-            type="number"
-            name="before_validity"
-            id={productBeforeValidityId}
-          />
-          <ErrorMessage name="before_validity" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productTypeId}>Type</label>
-          <Field type="string" name="type" id={productTypeId} />
-          <ErrorMessage name="type" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productImageId}>Image</label>
-          <Field type="file" name="image" id={productImageId} />
-          <ErrorMessage name="image" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productWeightId}>Weight</label>
-          <Field type="number" name="weight" id={productWeightId} />
-          <ErrorMessage name="weight" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productTaraWeightId}>Tara weight</label>
-          <Field type="number" name="taraWeight" id={productTaraWeightId} />
-          <ErrorMessage name="taraWeight" component="span" />
-        </div>
-        <button type="submit">Submit</button>
-      </Form>
+              <ErrorMessage name="precode" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productPcsGoodId}>By weight or piece</label>
+              <Field type="checkbox" name="pcsGood" id={productPcsGoodId} />
+              <ErrorMessage name="pcsGood" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productIdSectionId}>Id section</label>
+              <Field type="number" name="idSection" id={productIdSectionId} />
+              <ErrorMessage name="idSection" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productIdTemplateId}>Id template</label>
+              <Field type="number" name="idTemplate" id={productIdTemplateId} />
+              <ErrorMessage name="idTemplate" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productBarcodeCodingId}>Barcode</label>
+              <Field
+                type="string"
+                name="barcodeCoding"
+                id={productBarcodeCodingId}
+              />
+              <ErrorMessage name="barcodeCoding" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productDescriptionId}>Description</label>
+              <Field
+                as="textarea"
+                cols="20"
+                rows="5"
+                name="description"
+                id={productDescriptionId}
+              />
+              <ErrorMessage name="description" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productBeforeValidityId}>Before validity</label>
+              <Field
+                type="number"
+                name="before_validity"
+                id={productBeforeValidityId}
+              />
+              <ErrorMessage name="before_validity" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productTypeId}>Type</label>
+              <Field type="string" name="type" id={productTypeId} />
+              <ErrorMessage name="type" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productImageId}>Image</label>
+              <Field type="text" name="image" id={productImageId} />
+              <ErrorMessage name="image" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productWeightId}>Weight</label>
+              <Field type="number" name="weight" id={productWeightId} />
+              <ErrorMessage name="weight" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productTaraWeightId}>Tara weight</label>
+              <Field type="number" name="taraWeight" id={productTaraWeightId} />
+              <ErrorMessage name="taraWeight" component="span" />
+            </div>
+            <button type="submit">Submit</button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

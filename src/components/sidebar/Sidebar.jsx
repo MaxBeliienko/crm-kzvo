@@ -57,18 +57,6 @@ const Sidebar = () => {
       <ul>
         <li>
           <NavLink
-            to="/products-description"
-            className={({ isActive }) =>
-              `${isActive ? styles.activeLink : styles.inactiveLink} ${
-                styles['del-padding-left']
-              }`
-            }
-          >
-            Product description
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/goods-description"
             className={({ isActive }) =>
               `${isActive ? styles.activeLink : styles.inactiveLink} ${
@@ -76,7 +64,7 @@ const Sidebar = () => {
               }`
             }
           >
-            Product description
+            {t('description.sidebar.Goods')}
           </NavLink>
         </li>
         <li></li>

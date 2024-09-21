@@ -5,6 +5,7 @@ export const sidebarText = {
     Homepage: 'Homepage',
     SalesAnalytics: 'Sales analytics',
     Products: 'PRODUCTS',
+    Goods: 'Goods',
   },
   ukr: {
     Menu: 'МЕНЮ',
@@ -12,6 +13,40 @@ export const sidebarText = {
     Homepage: 'Домашня сторінка',
     SalesAnalytics: 'Аналітика продажів',
     Products: 'ПРОДУКТИ',
+    Goods: 'Товари',
+  },
+};
+
+export const goodsTableText = {
+  en: {
+    Header: 'All goods',
+    SearchPlaceholder: 'Search...',
+    AddProduct: 'Add product',
+    Name: 'Name',
+    Precode: 'Precode',
+    Price: 'Price',
+    Code: 'Code',
+    PcsGood: 'Weight/Per piece',
+    IdSection: 'Id section',
+    Action: 'Action',
+    View: 'View',
+    Edit: 'Edit',
+    Remove: 'Remove',
+  },
+  ukr: {
+    Header: 'Усі товари',
+    SearchPlaceholder: 'Пошук...',
+    AddProduct: 'Додати товар',
+    Name: 'Назва',
+    Precode: 'Прекод',
+    Price: 'Ціна',
+    Code: 'Код',
+    PcsGood: 'Ваговий/штучний',
+    IdSection: 'Id секції',
+    Action: 'Дія',
+    View: 'Переглянути',
+    Edit: 'Редагувати',
+    Remove: 'Видалити',
   },
 };
 

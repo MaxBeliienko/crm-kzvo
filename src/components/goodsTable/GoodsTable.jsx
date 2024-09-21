@@ -1,5 +1,6 @@
 import styles from './GoodsTable.module.css';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchGoods,
@@ -24,6 +25,7 @@ const GoodsTable = () => {
   const loading = useSelector(selectGoodsLoading);
   const error = useSelector(selectGoodsError);
   const menuRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Отримання товарів при завантаженні компонента
@@ -124,13 +126,13 @@ const GoodsTable = () => {
       <table>
         <thead>
           <tr>
-            <td>Name</td>
-            <td>Precode</td>
-            <td>Price</td>
-            <td>Code</td>
-            <td>pcsGood</td>
-            <td>idSection</td>
-            <td>Action</td>
+            <td>{t('description.goodsTable.Name')}</td>
+            <td>{t('description.goodsTable.Precode')}</td>
+            <td>{t('description.goodsTable.Price')}</td>
+            <td>{t('description.goodsTable.Code')}</td>
+            <td>{t('description.goodsTable.PcsGood')}</td>
+            <td>{t('description.goodsTable.IdSection')}</td>
+            <td>{t('description.goodsTable.Action')}</td>
           </tr>
         </thead>
         <tbody>
@@ -157,13 +159,13 @@ const GoodsTable = () => {
                   <div ref={menuRef} className={styles['dropdown-menu']}>
                     <ul>
                       <li onClick={() => handleAction('View', product)}>
-                        View
+                        {t('description.goodsTable.View')}
                       </li>
                       <li onClick={() => handleAction('Edit', product)}>
-                        Edit
+                        {t('description.goodsTable.Edit')}
                       </li>
                       <li onClick={() => handleAction('Remove', product)}>
-                        Remove
+                        {t('description.goodsTable.Remove')}
                       </li>
                     </ul>
                   </div>
@@ -180,13 +182,15 @@ const GoodsTable = () => {
     <div className={styles['goods-table-wrapper']}>
       <div className={styles['goods-table-info-container']}>
         <div className={styles['goods-table-info-text']}>
-          <h2 className={styles['goods-table-title']}>All goods</h2>
+          <h2 className={styles['goods-table-title']}>
+            {t('description.goodsTable.Header')}
+          </h2>
         </div>
         <div className={styles['goods-table-filter-wrap']}>
           <input
             className={styles['goods-table-search-input']}
             type="text"
-            placeholder="Search..."
+            placeholder={t('description.goodsTable.SearchPlaceholder')}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
