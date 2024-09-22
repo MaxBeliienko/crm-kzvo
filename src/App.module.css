@@ -1,9 +1,12 @@
 .app-container {
+  max-width: 1440px;
   display: flex;
 }
 
 .main-content {
   flex-grow: 1;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Стилі для контейнера сторінки */

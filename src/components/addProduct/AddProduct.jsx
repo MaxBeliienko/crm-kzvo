@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
 import { useEffect, useId } from 'react';
+import styles from './AddProduct.module.css';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -80,7 +81,7 @@ const AddProduct = ({ onClose }) => {
           localStorage.setItem('addProductForm', JSON.stringify(values));
         }, [values]);
         return (
-          <Form>
+          <Form className={styles.form}>
             <div>
               <label htmlFor={productNameId}>Name</label>
               <Field type="text" name="name" id={productNameId} />
@@ -88,7 +89,12 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productPriceId}>Price</label>
-              <Field type="number" name="price" id={productPriceId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="price"
+                id={productPriceId}
+              />
               <ErrorMessage name="price" component="span" />
             </div>
             <div>
@@ -104,7 +110,12 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productPcsGoodId}>By weight or piece</label>
-              <Field type="checkbox" name="pcsGood" id={productPcsGoodId} />
+              <Field
+                className={styles.check}
+                type="checkbox"
+                name="pcsGood"
+                id={productPcsGoodId}
+              />
               <ErrorMessage name="pcsGood" component="span" />
             </div>
             <div>
@@ -120,7 +131,7 @@ const AddProduct = ({ onClose }) => {
             <div>
               <label htmlFor={productBarcodeCodingId}>Barcode</label>
               <Field
-                type="string"
+                type="text"
                 name="barcodeCoding"
                 id={productBarcodeCodingId}
               />
@@ -148,7 +159,7 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productTypeId}>Type</label>
-              <Field type="string" name="type" id={productTypeId} />
+              <Field type="text" name="type" id={productTypeId} />
               <ErrorMessage name="type" component="span" />
             </div>
             <div>

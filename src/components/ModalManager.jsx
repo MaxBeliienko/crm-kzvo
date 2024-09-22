@@ -18,7 +18,7 @@ const ModalManager = () => {
     case 'addProduct':
       return (
         <Modal onClose={handleClose}>
-          <AddProduct {...modalProps} />
+          <AddProduct onClose={handleClose} {...modalProps} />
         </Modal>
       );
     case 'editProduct':
