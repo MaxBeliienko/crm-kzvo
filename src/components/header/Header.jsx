@@ -46,7 +46,7 @@ const Header = () => {
         name="search"
         placeholder="Search"
       />
-      <LocalizationSwitcher />
+
       <div>
         <button onClick={toggleMenu}>
           <GrAdd />
@@ -56,6 +56,7 @@ const Header = () => {
         </button>
       </div>
       {isMenuOpen && <DropdownMenu closeMenu={toggleMenu} menuRef={menuRef} />}
+      <LocalizationSwitcher />
     </header>
   );
 };

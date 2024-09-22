@@ -1,13 +1,26 @@
 .sidebar-container {
   width: 250px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: start;
+  padding: 36px 0 78px 28px;
+  box-shadow: 0 10px 60px 0 rgba(226, 236, 249, 0.5);
+}
+
+.logo-wrap {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.sidebar-nav-container {
   display: flex;
   flex-direction: column;
   gap: 5px;
   align-items: start;
-  padding: 36px 0 78px 28px;
-  box-shadow: 0 10px 60px 0 rgba(226, 236, 249, 0.5);
 }
 
 .sidebar-menu-list {

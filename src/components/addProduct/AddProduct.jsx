@@ -99,12 +99,22 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productCodeId}>Code</label>
-              <Field type="number" name="code" id={productCodeId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="code"
+                id={productCodeId}
+              />
               <ErrorMessage name="code" component="span" />
             </div>
             <div>
               <label htmlFor={productPrecodeId}>Precode</label>
-              <Field type="number" name="precode" id={productPrecodeId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="precode"
+                id={productPrecodeId}
+              />
 
               <ErrorMessage name="precode" component="span" />
             </div>
@@ -120,12 +130,22 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productIdSectionId}>Id section</label>
-              <Field type="number" name="idSection" id={productIdSectionId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="idSection"
+                id={productIdSectionId}
+              />
               <ErrorMessage name="idSection" component="span" />
             </div>
             <div>
               <label htmlFor={productIdTemplateId}>Id template</label>
-              <Field type="number" name="idTemplate" id={productIdTemplateId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="idTemplate"
+                id={productIdTemplateId}
+              />
               <ErrorMessage name="idTemplate" component="span" />
             </div>
             <div>
@@ -141,8 +161,7 @@ const AddProduct = ({ onClose }) => {
               <label htmlFor={productDescriptionId}>Description</label>
               <Field
                 as="textarea"
-                cols="20"
-                rows="5"
+                rows="3"
                 name="description"
                 id={productDescriptionId}
               />
@@ -152,6 +171,7 @@ const AddProduct = ({ onClose }) => {
               <label htmlFor={productBeforeValidityId}>Before validity</label>
               <Field
                 type="number"
+                className={styles['custom-number-input']}
                 name="before_validity"
                 id={productBeforeValidityId}
               />
@@ -169,12 +189,22 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productWeightId}>Weight</label>
-              <Field type="number" name="weight" id={productWeightId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="weight"
+                id={productWeightId}
+              />
               <ErrorMessage name="weight" component="span" />
             </div>
             <div>
               <label htmlFor={productTaraWeightId}>Tara weight</label>
-              <Field type="number" name="taraWeight" id={productTaraWeightId} />
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="taraWeight"
+                id={productTaraWeightId}
+              />
               <ErrorMessage name="taraWeight" component="span" />
             </div>
             <button type="submit">Submit</button>

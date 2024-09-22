@@ -10,11 +10,11 @@ const LocalizationSwitcher = () => {
   };
   return (
     <div>
-      <button onClick={() => changeLanguage('en')}>
-        {<img src={eng} alt="English" width={50} />}
-      </button>
       <button onClick={() => changeLanguage('ukr')}>
-        {<img src={ukr} alt="English" width={40} />}
+        {<img src={ukr} alt="Ukraine" width={40} />}
+      </button>
+      <button onClick={() => changeLanguage('en')}>
+        {<img src={eng} alt="English" width={40} />}
       </button>
     </div>
   );
