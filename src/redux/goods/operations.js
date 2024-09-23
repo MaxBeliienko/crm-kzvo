@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 // axios.defaults.baseURL = 'http://192.168.0.135:8080/api';
@@ -42,8 +44,10 @@ export const addGoods = createAsyncThunk(
         `/goods?databaseId=${databaseId}`,
         goodsData
       );
+      toast.success(thunkAPI.extra.i18n.t('description.toast.AddProduct'));
       return response.data;
     } catch (error) {
+      toast.error(thunkAPI.extra.i18n.t('description.toast.AddProductError'));
       return thunkAPI.rejectWithValue(createSerializableError(error));
     }
   }
@@ -57,8 +61,10 @@ export const updateGoods = createAsyncThunk(
         `/goods/${goodsId}?databaseId=${databaseId}`,
         goodsData
       );
+      toast.success(thunkAPI.extra.i18n.t('description.toast.EditProduct'));
       return response.data;
     } catch (error) {
+      toast.error(thunkAPI.extra.i18n.t('description.toast.EditProductError'));
       return thunkAPI.rejectWithValue(createSerializableError(error));
     }
   }
@@ -69,8 +75,12 @@ export const deleteGoods = createAsyncThunk(
   async ({ databaseId, goodsId }, thunkAPI) => {
     try {
       await axios.delete(`/goods/${goodsId}?databaseId=${databaseId}`);
+      toast.success(thunkAPI.extra.i18n.t('description.toast.DeleteProduct'));
       return goodsId;
     } catch (error) {
+      toast.success(
+        thunkAPI.extra.i18n.t('description.toast.DeleteProductError')
+      );
       return thunkAPI.rejectWithValue(createSerializableError(error));
     }
   }

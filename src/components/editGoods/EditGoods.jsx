@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
 import { useId } from 'react';
+import styles from '../addProduct/AddProduct.module.css';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -85,7 +86,7 @@ const EditGoods = ({ product, onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form className={styles.form}>
         <div>
           <label htmlFor={productNameId}>Name</label>
           <Field type="text" name="name" id={productNameId} />

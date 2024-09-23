@@ -1,9 +1,12 @@
 import styles from './App.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import ModalManager from './components/ModalManager';
+import { ToastContainer } from 'react-toastify';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SalesAnalytics = lazy(() => import('./pages/SalesAnalytics'));
@@ -29,6 +32,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ModalManager />
+          <ToastContainer position="bottom-right" autoClose={3000} />
         </div>
       </div>
     </Suspense>

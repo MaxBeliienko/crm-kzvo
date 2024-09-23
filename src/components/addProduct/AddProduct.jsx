@@ -17,8 +17,8 @@ const FeedbackSchema = Yup.object().shape({
   description: Yup.string(),
   before_validity: Yup.number(),
   type: Yup.string(),
-  // image: Yup.array().of(Yup.string()),
-  image: Yup.string(),
+  image: Yup.array().of(Yup.string()),
+  // image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
@@ -184,7 +184,7 @@ const AddProduct = ({ onClose }) => {
             </div>
             <div>
               <label htmlFor={productImageId}>Image</label>
-              <Field type="text" name="image" id={productImageId} />
+              <Field type="file" name="image" id={productImageId} />
               <ErrorMessage name="image" component="span" />
             </div>
             <div>

@@ -50,6 +50,25 @@ export const goodsTableText = {
   },
 };
 
+export const toastText = {
+  en: {
+    AddProduct: 'Product successfully added!',
+    AddProductError: 'Failed to add product!',
+    EditProduct: 'Product successfully edited!',
+    EditProductError: 'Failed to edit product!',
+    DeleteProduct: 'Product successfully deleted!',
+    DeleteProductError: 'Failed to delete product!',
+  },
+  ukr: {
+    AddProduct: 'Товар успішно доданий!',
+    AddProductError: 'Товар не було додано!',
+    EditProduct: 'Дані про товар успішно змінено!',
+    EditProductError: 'Помилка оновлення даних товару!',
+    DeleteProduct: 'Товар видалено успішно!!',
+    DeleteProductError: 'Помилка видалення товару!',
+  },
+};
+
 export const notFoundText = {
   en: {
     NotFoundMessage: 'Sorry, the page you are looking for does not exist.',

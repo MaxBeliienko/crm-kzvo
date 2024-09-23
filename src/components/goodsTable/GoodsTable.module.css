@@ -14,6 +14,17 @@
   justify-content: space-between;
 }
 
+.button-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.button-wrapper > button {
+  background-color: #d4d4d4;
+  padding: 5px;
+  border-radius: 10px;
+}
+
 .goods-table-title {
   font-weight: 600;
   font-size: 22px;

@@ -180,12 +180,15 @@ const GoodsTable = () => {
               {t('description.goodsTable.IdSection')}
             </option>
           </select>
+        </div>
+        <div className={styles['button-wrapper']}>
           <button
             onClick={() => handleAction('addProduct', null)}
             className={styles['add-product-button']}
           >
             {t('description.goodsTable.AddProduct')}
           </button>
+          <button>Додати файл товарів</button>
         </div>
       </div>
       {content}
