@@ -2,7 +2,7 @@ import styles from './GoodsTable.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods } from '../../redux/goods/operations';
+import { fetchGoods, uploadFile } from '../../redux/goods/operations';
 import {
   selectGoods,
   selectGoodsLoading,
@@ -20,7 +20,7 @@ const GoodsTable = () => {
 
   useEffect(() => {
     // Отримання товарів при завантаженні компонента
-    dispatch(fetchGoods({ databaseId: 1, page: 0, limit: 10 }));
+    dispatch(fetchGoods({ databaseId: 1, page: 0 }));
   }, [dispatch]);
 
   // Функція для перетворення Base64 в URL зображення
@@ -77,11 +77,24 @@ const GoodsTable = () => {
     setMenuOpen(menuOpen === id ? null : id);
   };
 
+  // Відкриття модального вікна View/Edit/Remove
   const handleAction = (actionType, product) => {
     dispatch(openModal({ modalType: actionType, modalProps: { product } }));
     setMenuOpen(null);
   };
 
+  //Логіка завантаження файлу товарів
+  const [file, setFile] = useState(null);
+  const handleFileChange = event => {
+    setFile(event.target.files[0]); // Зберігаємо вибраний файл
+  };
+  const handleFileUpload = () => {
+    if (file) {
+      dispatch(uploadFile({ databaseId: 1, file }));
+    }
+  };
+
+  // Таблиця
   let content;
 
   if (loading) {
@@ -188,7 +201,28 @@ const GoodsTable = () => {
           >
             {t('description.goodsTable.AddProduct')}
           </button>
-          <button>Додати файл товарів</button>
+          <input
+            type="file"
+            accept=".txt"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+            id="file-product-input"
+          />
+          <label
+            htmlFor="file-product-input"
+            className={
+              file ? styles['label-file-done'] : styles['label-file-no']
+            }
+          >
+            {file
+              ? t('description.goodsTable.LabelOn')
+              : t('description.goodsTable.LabelOff')}
+          </label>
+          {file && (
+            <button onClick={handleFileUpload}>
+              {t('description.goodsTable.AddGoodsFile')}
+            </button>
+          )}
         </div>
       </div>
       {content}

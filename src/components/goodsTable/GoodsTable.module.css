@@ -25,6 +25,16 @@
   border-radius: 10px;
 }
 
+.label-file-done {
+  padding-top: 10px;
+  color: green;
+}
+
+.label-file-no {
+  padding-top: 10px;
+  color: red;
+}
+
 .goods-table-title {
   font-weight: 600;
   font-size: 22px;

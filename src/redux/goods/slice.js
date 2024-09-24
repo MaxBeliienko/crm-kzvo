@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchGoods, addGoods, updateGoods, deleteGoods } from './operations';
+import {
+  fetchGoods,
+  addGoods,
+  updateGoods,
+  deleteGoods,
+  uploadFile,
+} from './operations';
 
 const handlePending = state => {
   state.loading = true;
@@ -48,7 +54,12 @@ const goodsSlice = createSlice({
         state.loading = false;
         state.goods = state.goods.filter(good => good.id !== action.payload);
       })
-      .addCase(deleteGoods.rejected, handleRejected);
+      .addCase(deleteGoods.rejected, handleRejected)
+      .addCase(uploadFile.pending, handlePending)
+      .addCase(uploadFile.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(uploadFile.rejected, handleRejected);
   },
 });
 

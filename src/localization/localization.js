@@ -22,6 +22,10 @@ export const goodsTableText = {
     Header: 'All goods',
     SearchPlaceholder: 'Search...',
     AddProduct: 'Add product',
+    LabelOff: 'Select a file',
+    LabelOn: 'File selected',
+    AddGoodsFile: 'Add product file',
+    SetFile: 'Select a file',
     Name: 'Name',
     Precode: 'Precode',
     Price: 'Price',
@@ -37,6 +41,10 @@ export const goodsTableText = {
     Header: 'Усі товари',
     SearchPlaceholder: 'Пошук...',
     AddProduct: 'Додати товар',
+    LabelOff: 'Оберіть файл',
+    LabelOn: 'Файл обрано',
+    AddGoodsFile: 'Додати файл продуктів',
+    SetFile: 'Обрати файл',
     Name: 'Назва',
     Precode: 'Прекод',
     Price: 'Ціна',
@@ -58,6 +66,8 @@ export const toastText = {
     EditProductError: 'Failed to edit product!',
     DeleteProduct: 'Product successfully deleted!',
     DeleteProductError: 'Failed to delete product!',
+    AddGoodsFile:
+      'The product file has been added successfully! Please refresh the page!',
   },
   ukr: {
     AddProduct: 'Товар успішно доданий!',
@@ -66,6 +76,8 @@ export const toastText = {
     EditProductError: 'Помилка оновлення даних товару!',
     DeleteProduct: 'Товар видалено успішно!!',
     DeleteProductError: 'Помилка видалення товару!',
+    AddGoodsFile:
+      'Файл товарів успішно доданий! Оновіть, будь ласка, сторінку!',
   },
 };
 

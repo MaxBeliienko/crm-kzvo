@@ -20,7 +20,7 @@ const createSerializableError = error => ({
 
 export const fetchGoods = createAsyncThunk(
   'goods/fetchGoods',
-  async ({ databaseId, page = 0, limit = 10 }, thunkAPI) => {
+  async ({ databaseId, page = 0, limit = 1000 }, thunkAPI) => {
     try {
       const response = await axios.get('/goods', {
         params: {
@@ -78,7 +78,7 @@ export const deleteGoods = createAsyncThunk(
       toast.success(thunkAPI.extra.i18n.t('description.toast.DeleteProduct'));
       return goodsId;
     } catch (error) {
-      toast.success(
+      toast.error(
         thunkAPI.extra.i18n.t('description.toast.DeleteProductError')
       );
       return thunkAPI.rejectWithValue(createSerializableError(error));
@@ -88,7 +88,15 @@ export const deleteGoods = createAsyncThunk(
 
 export const uploadFile = createAsyncThunk(
   'goods/uploadFile',
-  async ({ databaseId, file, columnsJson, skipHeader = true }, thunkAPI) => {
+  async (
+    {
+      databaseId,
+      file,
+      columnsJson = 'code;pre_code;id_scales;id_sections;id_templates;id_barcodes;name;price;type;data',
+      skipHeader = true,
+    },
+    thunkAPI
+  ) => {
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -97,6 +105,7 @@ export const uploadFile = createAsyncThunk(
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
+      toast.success(thunkAPI.extra.i18n.t('description.toast.AddGoodsFile'));
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(createSerializableError(error));
