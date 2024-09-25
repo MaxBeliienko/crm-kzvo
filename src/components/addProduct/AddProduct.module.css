@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  max-width: 600px;
+  max-width: 80%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -15,6 +15,12 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex: 0 0 calc(50% - 10px);
+}
+
+.radio-group {
+  display: flex;
+  gap: 10px;
 }
 
 .form > label {
@@ -35,10 +41,6 @@
   border: 1px solid #ccc;
   font-size: 14px;
   transition: border-color 0.3s ease-in-out;
-}
-
-.form > div > textarea {
-  width: 174px;
 }
 
 .check {

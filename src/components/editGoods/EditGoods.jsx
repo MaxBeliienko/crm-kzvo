@@ -2,8 +2,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
 import { updateGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import styles from '../addProduct/AddProduct.module.css';
+import { handleFileChange } from '../../utils/handleFileChange';
+import { useTranslation } from 'react-i18next';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -67,15 +69,27 @@ const EditGoods = ({ product, onClose }) => {
     description: description,
     before_validity: before_validity,
     type: type,
-    image: image,
+    image: image || [],
     weight: weight,
     taraWeight: taraWeight,
   };
 
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
+  // Локальний стан для зображень
+  const [images, setImages] = useState([]);
+
   const handleSubmit = (values, actions) => {
+    const resultValues = { ...values, image: images };
+
     dispatch(
-      updateGoods({ databaseId: 1, goodsId: product.id, goodsData: values })
+      updateGoods({
+        databaseId: 1,
+        goodsId: product.id,
+        goodsData: resultValues,
+      })
     );
     onClose();
   };
@@ -86,94 +100,165 @@ const EditGoods = ({ product, onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form className={styles.form}>
-        <div>
-          <label htmlFor={productNameId}>Name</label>
-          <Field type="text" name="name" id={productNameId} />
-          <ErrorMessage name="name" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPriceId}>Price</label>
-          <Field type="number" name="price" id={productPriceId} />
-          <ErrorMessage name="price" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productCodeId}>Code</label>
-          <Field type="number" name="code" id={productCodeId} />
-          <ErrorMessage name="code" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPrecodeId}>Precode</label>
-          <Field type="number" name="precode" id={productPrecodeId} />
+      {({ values, setValues, setFieldValue }) => {
+        return (
+          <Form className={styles.form}>
+            <div>
+              <label htmlFor={productNameId}>
+                {t('description.product.Name')}
+              </label>
+              <Field type="text" name="name" id={productNameId} />
+              <ErrorMessage name="name" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productPriceId}>
+                {t('description.product.Price')}
+              </label>
+              <Field type="number" name="price" id={productPriceId} />
+              <ErrorMessage name="price" component="span" />
+            </div>
 
-          <ErrorMessage name="precode" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productPcsGoodId}>By weight or piece</label>
-          <Field type="boolean" name="pcsGood" id={productPcsGoodId} />
-          <ErrorMessage name="pcsGood" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productIdSectionId}>Id section</label>
-          <Field type="number" name="idSection" id={productIdSectionId} />
-          <ErrorMessage name="idSection" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productIdTemplateId}>Id template</label>
-          <Field type="number" name="idTemplate" id={productIdTemplateId} />
-          <ErrorMessage name="idTemplate" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productBarcodeCodingId}>Barcode</label>
-          <Field
-            type="string"
-            name="barcodeCoding"
-            id={productBarcodeCodingId}
-          />
-          <ErrorMessage name="barcodeCoding" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productDescriptionId}>Description</label>
-          <Field
-            as="textarea"
-            cols="20"
-            rows="5"
-            name="description"
-            id={productDescriptionId}
-          />
-          <ErrorMessage name="description" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productBeforeValidityId}>Before validity</label>
-          <Field
-            type="number"
-            name="before_validity"
-            id={productBeforeValidityId}
-          />
-          <ErrorMessage name="before_validity" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productTypeId}>Type</label>
-          <Field type="string" name="type" id={productTypeId} />
-          <ErrorMessage name="type" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productImageId}>Image</label>
-          <Field type="file" name="image" id={productImageId} />
-          <ErrorMessage name="image" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productWeightId}>Weight</label>
-          <Field type="number" name="weight" id={productWeightId} />
-          <ErrorMessage name="weight" component="span" />
-        </div>
-        <div>
-          <label htmlFor={productTaraWeightId}>Tara weight</label>
-          <Field type="number" name="taraWeight" id={productTaraWeightId} />
-          <ErrorMessage name="taraWeight" component="span" />
-        </div>
-        <button type="submit">Submit</button>
-      </Form>
+            <div>
+              <label htmlFor={productPrecodeId}>
+                {t('description.product.Precode')}
+              </label>
+              <Field type="number" name="precode" id={productPrecodeId} />
+
+              <ErrorMessage name="precode" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productCodeId}>
+                {t('description.product.Code')}
+              </label>
+              <Field type="number" name="code" id={productCodeId} />
+              <ErrorMessage name="code" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productIdSectionId}>
+                {t('description.product.IdSection')}
+              </label>
+              <Field type="number" name="idSection" id={productIdSectionId} />
+              <ErrorMessage name="idSection" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productIdTemplateId}>
+                {t('description.product.IdTemplate')}
+              </label>
+              <Field type="number" name="idTemplate" id={productIdTemplateId} />
+              <ErrorMessage name="idTemplate" component="span" />
+            </div>
+            <div>
+              <div id={productPcsGoodId}>
+                {t('description.product.PcsGood')}
+              </div>
+              <div role="group" aria-labelledby="my-radio-group">
+                <label>
+                  <Field
+                    type="radio"
+                    name="pcsGood"
+                    value="false"
+                    checked={values.pcsGood === false}
+                    onChange={() => setValues({ ...values, pcsGood: false })}
+                  />
+                  {t('description.product.Weighted')}
+                </label>
+                <label htmlFor={`${productPcsGoodId}-piece`}>
+                  <Field
+                    type="radio"
+                    name="pcsGood"
+                    id={`${productPcsGoodId}-piece`}
+                    value="true"
+                    checked={values.pcsGood === true}
+                    onChange={() => setValues({ ...values, pcsGood: true })}
+                  />
+                  {t('description.product.ByPiece')}
+                </label>
+              </div>
+              <ErrorMessage name="pcsGood" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productBarcodeCodingId}>
+                {t('description.product.Barcode')}
+              </label>
+              <Field
+                type="text"
+                name="barcodeCoding"
+                id={productBarcodeCodingId}
+              />
+              <ErrorMessage name="barcodeCoding" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productDescriptionId}>
+                {t('description.product.Description')}
+              </label>
+              <Field
+                as="textarea"
+                cols="300"
+                rows="3"
+                name="description"
+                id={productDescriptionId}
+              />
+              <ErrorMessage name="description" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productBeforeValidityId}>
+                {t('description.product.BeforeValidity')}
+              </label>
+              <Field
+                type="number"
+                name="before_validity"
+                id={productBeforeValidityId}
+              />
+              <ErrorMessage name="before_validity" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productTypeId}>
+                {t('description.product.Type')}
+              </label>
+              <Field type="text" name="type" id={productTypeId} />
+              <ErrorMessage name="type" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productImageId}>
+                {t('description.product.Image')}
+              </label>
+              <Field
+                type="file"
+                name="image"
+                id={productImageId}
+                accept="image/*"
+                onChange={event => handleFileChange(event, setImages)}
+              />
+              <ErrorMessage name="image" component="span" />
+            </div>
+            <div style={{ display: 'none' }}>
+              {images.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`preview-${index}`}
+                  style={{ width: '100px', height: '100px' }}
+                />
+              ))}
+            </div>
+            <div>
+              <label htmlFor={productWeightId}>
+                {t('description.product.Weight')}
+              </label>
+              <Field type="number" name="weight" id={productWeightId} />
+              <ErrorMessage name="weight" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productTaraWeightId}>
+                {t('description.product.TaraWeight')}
+              </label>
+              <Field type="number" name="taraWeight" id={productTaraWeightId} />
+              <ErrorMessage name="taraWeight" component="span" />
+            </div>
+            <button type="submit">{t('description.product.Submit')}</button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

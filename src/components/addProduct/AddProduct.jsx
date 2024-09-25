@@ -1,9 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addGoods } from '../../redux/goods/operations';
+import { selectGoods } from '../../redux/goods/selectors';
 import * as Yup from 'yup';
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import styles from './AddProduct.module.css';
+import { handleFileChange } from '../../utils/handleFileChange';
+import { useTranslation } from 'react-i18next';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -18,7 +21,6 @@ const FeedbackSchema = Yup.object().shape({
   before_validity: Yup.number(),
   type: Yup.string(),
   image: Yup.array().of(Yup.string()),
-  // image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
@@ -35,7 +37,7 @@ const initialValues = {
   description: '',
   before_validity: 0,
   type: '',
-  image: '',
+  image: [],
   weight: 1,
   taraWeight: 0,
 };
@@ -58,13 +60,32 @@ const AddProduct = ({ onClose }) => {
 
   const dispatch = useDispatch();
 
+  const { t } = useTranslation();
+
+  const goods = useSelector(selectGoods);
+
+  // Перевірка унікальності preCode
+  const isPreCodeUnique = preсode => {
+    return !goods.some(product => product.precode === preсode);
+  };
+
+  // Перевіряємо значення полів форми з localStorage
   const loadSavedValues = () => {
     const savedValues = localStorage.getItem('addProductForm');
     return savedValues ? JSON.parse(savedValues) : initialValues;
   };
 
+  // Стан для зображень
+  const [images, setImages] = useState([]);
+
   const handleSubmit = (values, actions) => {
-    dispatch(addGoods({ databaseId: 1, goodsData: values }));
+    const preсode = values.precode;
+    if (!isPreCodeUnique(preсode)) {
+      alert('Не унікальний!!!');
+      return;
+    }
+    const resultValues = { ...values, image: images };
+    dispatch(addGoods({ databaseId: 1, goodsData: resultValues }));
     localStorage.removeItem('addProductForm');
     onClose();
   };
@@ -83,12 +104,16 @@ const AddProduct = ({ onClose }) => {
         return (
           <Form className={styles.form}>
             <div>
-              <label htmlFor={productNameId}>Name</label>
+              <label htmlFor={productNameId}>
+                {t('description.product.Name')}
+              </label>
               <Field type="text" name="name" id={productNameId} />
               <ErrorMessage name="name" component="span" />
             </div>
             <div>
-              <label htmlFor={productPriceId}>Price</label>
+              <label htmlFor={productPriceId}>
+                {t('description.product.Price')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -97,8 +122,24 @@ const AddProduct = ({ onClose }) => {
               />
               <ErrorMessage name="price" component="span" />
             </div>
+
             <div>
-              <label htmlFor={productCodeId}>Code</label>
+              <label htmlFor={productPrecodeId}>
+                {t('description.product.Precode')}
+              </label>
+              <Field
+                type="number"
+                className={styles['custom-number-input']}
+                name="precode"
+                id={productPrecodeId}
+              />
+
+              <ErrorMessage name="preCode" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productCodeId}>
+                {t('description.product.Code')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -108,28 +149,9 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="code" component="span" />
             </div>
             <div>
-              <label htmlFor={productPrecodeId}>Precode</label>
-              <Field
-                type="number"
-                className={styles['custom-number-input']}
-                name="precode"
-                id={productPrecodeId}
-              />
-
-              <ErrorMessage name="precode" component="span" />
-            </div>
-            <div>
-              <label htmlFor={productPcsGoodId}>By weight or piece</label>
-              <Field
-                className={styles.check}
-                type="checkbox"
-                name="pcsGood"
-                id={productPcsGoodId}
-              />
-              <ErrorMessage name="pcsGood" component="span" />
-            </div>
-            <div>
-              <label htmlFor={productIdSectionId}>Id section</label>
+              <label htmlFor={productIdSectionId}>
+                {t('description.product.IdSection')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -139,7 +161,9 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="idSection" component="span" />
             </div>
             <div>
-              <label htmlFor={productIdTemplateId}>Id template</label>
+              <label htmlFor={productIdTemplateId}>
+                {t('description.product.IdTemplate')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -149,7 +173,42 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="idTemplate" component="span" />
             </div>
             <div>
-              <label htmlFor={productBarcodeCodingId}>Barcode</label>
+              <div id={productPcsGoodId}>
+                {t('description.product.PcsGood')}
+              </div>
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className={styles['radio-group']}
+              >
+                <label>
+                  <Field
+                    type="radio"
+                    name="pcsGood"
+                    value="false"
+                    checked={values.pcsGood === false}
+                    onChange={() => setValues({ ...values, pcsGood: false })}
+                  />
+                  {t('description.product.Weighted')}
+                </label>
+                <label htmlFor={`${productPcsGoodId}-piece`}>
+                  <Field
+                    type="radio"
+                    name="pcsGood"
+                    id={`${productPcsGoodId}-piece`}
+                    value="true"
+                    checked={values.pcsGood === true}
+                    onChange={() => setValues({ ...values, pcsGood: true })}
+                  />
+                  {t('description.product.ByPiece')}
+                </label>
+              </div>
+              <ErrorMessage name="pcsGood" component="span" />
+            </div>
+            <div>
+              <label htmlFor={productBarcodeCodingId}>
+                {t('description.product.Barcode')}
+              </label>
               <Field
                 type="text"
                 name="barcodeCoding"
@@ -158,7 +217,9 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="barcodeCoding" component="span" />
             </div>
             <div>
-              <label htmlFor={productDescriptionId}>Description</label>
+              <label htmlFor={productDescriptionId}>
+                {t('description.product.Description')}
+              </label>
               <Field
                 as="textarea"
                 rows="3"
@@ -168,7 +229,9 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="description" component="span" />
             </div>
             <div>
-              <label htmlFor={productBeforeValidityId}>Before validity</label>
+              <label htmlFor={productBeforeValidityId}>
+                {t('description.product.BeforeValidity')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -178,17 +241,39 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="before_validity" component="span" />
             </div>
             <div>
-              <label htmlFor={productTypeId}>Type</label>
+              <label htmlFor={productTypeId}>
+                {t('description.product.Type')}
+              </label>
               <Field type="text" name="type" id={productTypeId} />
               <ErrorMessage name="type" component="span" />
             </div>
             <div>
-              <label htmlFor={productImageId}>Image</label>
-              <Field type="file" name="image" id={productImageId} />
+              <label htmlFor={productImageId}>
+                {t('description.product.Image')}
+              </label>
+              <Field
+                type="file"
+                name="image"
+                id={productImageId}
+                accept="image/*"
+                onChange={event => handleFileChange(event, setImages)}
+              />
               <ErrorMessage name="image" component="span" />
             </div>
+            <div style={{ display: 'none' }}>
+              {images.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`preview-${index}`}
+                  style={{ width: '100px', height: '100px' }}
+                />
+              ))}
+            </div>
             <div>
-              <label htmlFor={productWeightId}>Weight</label>
+              <label htmlFor={productWeightId}>
+                {t('description.product.Weight')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -198,7 +283,9 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="weight" component="span" />
             </div>
             <div>
-              <label htmlFor={productTaraWeightId}>Tara weight</label>
+              <label htmlFor={productTaraWeightId}>
+                {t('description.product.TaraWeight')}
+              </label>
               <Field
                 type="number"
                 className={styles['custom-number-input']}
@@ -207,7 +294,7 @@ const AddProduct = ({ onClose }) => {
               />
               <ErrorMessage name="taraWeight" component="span" />
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">{t('description.product.Submit')}</button>
           </Form>
         );
       }}

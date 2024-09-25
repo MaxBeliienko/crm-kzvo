@@ -6,6 +6,7 @@ import {
   goodsTableText,
   notFoundText,
   toastText,
+  productText,
 } from './localization';
 
 i18n
@@ -20,8 +21,9 @@ i18n
           description: {
             sidebar: sidebarText.en,
             goodsTable: goodsTableText.en,
+            product: productText.en,
             notFound: notFoundText.en,
-            toast: toastText.ukr,
+            toast: toastText.en,
           },
         },
       },
@@ -30,6 +32,7 @@ i18n
           description: {
             sidebar: sidebarText.ukr,
             goodsTable: goodsTableText.ukr,
+            product: productText.ukr,
             notFound: notFoundText.ukr,
             toast: toastText.ukr,
           },

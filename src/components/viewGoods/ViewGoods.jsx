@@ -1,4 +1,5 @@
 import styles from './ViewGoods.module.css';
+import { useTranslation } from 'react-i18next';
 
 const ViewGoods = ({ product }) => {
   const {
@@ -18,6 +19,8 @@ const ViewGoods = ({ product }) => {
     pcsGood,
   } = product;
 
+  const { t } = useTranslation();
+
   return (
     <div className={styles['view-goods-container']}>
       <div className={styles['div1']}>
@@ -27,51 +30,51 @@ const ViewGoods = ({ product }) => {
         <h3>{name}</h3>
       </div>
       <div className={styles['div3']}>
-        <p>Precode:</p>
+        <p>{t('description.product.Precode')}:</p>
         <p>{precode}</p>
       </div>
       <div className={styles['div4']}>
-        <p>Code:</p>
+        <p>{t('description.product.Code')}:</p>
         <p>{code}</p>
       </div>
       <div className={styles['div5']}>
-        <p>Pcs Good: </p>
+        <p>{t('description.product.PcsGood')}: </p>
         <p>{pcsGood}</p>
       </div>
       <div className={styles['div6']}>
-        <p>Price:</p>
+        <p>{t('description.product.Price')}:</p>
         <p>{price}</p>
       </div>
       <div className={styles['div7']}>
         <p>{description}</p>
       </div>
       <div className={styles['div8']}>
-        <p>Weight:</p>
+        <p>{t('description.product.Weight')}:</p>
         <p>{weight}</p>
       </div>
       <div className={styles['div9']}>
-        <p>Tara weight: </p>
+        <p>{t('description.product.TaraWeight')}: </p>
         <p>{taraWeight}</p>
       </div>
       <div className={styles['div10']}>
-        <p>Barcode: </p>
+        <p>{t('description.product.Barcode')}: </p>
         <p>{barcodeCoding}</p>
       </div>
       <div className={styles['div11']}>
-        <p>Before validaty: </p>
+        <p>{t('description.product.BeforeValidity')}: </p>
         <p>{before_validaty}</p>
       </div>
       <div className={styles['div12']}>
-        <p>Id section: </p>
+        <p>{t('description.product.IdSection')}: </p>
         <p>{idSection}</p>
       </div>
       <div className={styles['div13']}>
-        <p>Id template: </p>
+        <p>{t('description.product.IdTemplate')}: </p>
         <p>{idTemplate}</p>
       </div>
 
       <div className={styles['div14']}>
-        <p>Type: </p>
+        <p>{t('description.product.Type')}: </p>
         <p>{type}</p>
       </div>
     </div>

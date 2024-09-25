@@ -14,6 +14,12 @@
   justify-content: space-between;
 }
 
+.goods-table-filter-wrap {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
 .button-wrapper {
   display: flex;
   gap: 10px;
@@ -23,6 +29,10 @@
   background-color: #d4d4d4;
   padding: 5px;
   border-radius: 10px;
+}
+
+.button-wrapper > button:hover {
+  background-color: antiquewhite;
 }
 
 .label-file-done {

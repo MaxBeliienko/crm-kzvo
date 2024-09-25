@@ -1,10 +1,8 @@
 import { useTranslation } from 'react-i18next';
-
 import LocalizationSwitcher from '../localizationSwitcher/LocalizationSwitcher';
 import DropdownMenu from '../dropdownMenu/DropdownMenu';
 import styles from './Header.module.css';
 import { GrAdd } from 'react-icons/gr';
-import { FiBell } from 'react-icons/fi';
 import { useEffect, useRef, useState } from 'react';
 
 const Header = () => {
@@ -50,9 +48,6 @@ const Header = () => {
       <div>
         <button onClick={toggleMenu}>
           <GrAdd />
-        </button>
-        <button>
-          <FiBell />
         </button>
       </div>
       {isMenuOpen && <DropdownMenu closeMenu={toggleMenu} menuRef={menuRef} />}

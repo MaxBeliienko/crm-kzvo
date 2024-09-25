@@ -9,6 +9,8 @@ import {
   selectGoodsError,
 } from '../../redux/goods/selectors';
 import { openModal } from '../../redux/modal/slice';
+import { FaArrowDown } from 'react-icons/fa';
+import { FaArrowUp } from 'react-icons/fa';
 
 const GoodsTable = () => {
   const dispatch = useDispatch();
@@ -39,19 +41,19 @@ const GoodsTable = () => {
   const [sortKey, setSortKey] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
 
+  const toggleSortOrder = () => {
+    setSortOrder(prevOrder => (prevOrder === 'asc' ? 'desc' : 'asc'));
+  };
+
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (typeof a[sortKey] === 'string') {
-      if (sortOrder === 'asc') {
-        return a[sortKey].localeCompare(b[sortKey]);
-      } else {
-        return b[sortKey].localeCompare(a[sortKey]);
-      }
+      return sortOrder === 'asc'
+        ? a[sortKey].localeCompare(b[sortKey])
+        : b[sortKey].localeCompare(a[sortKey]);
     } else {
-      if (sortOrder === 'asc') {
-        return a[sortKey] - b[sortKey];
-      } else {
-        return b[sortKey] - a[sortKey];
-      }
+      return sortOrder === 'asc'
+        ? a[sortKey] - b[sortKey]
+        : b[sortKey] - a[sortKey];
     }
   });
 
@@ -129,7 +131,11 @@ const GoodsTable = () => {
               </td> */}
               <td>{product.price}</td>
               <td>{product.code}</td>
-              <td>{product.pcsGood}</td>
+              <td>
+                {product.pcsGood === false
+                  ? t('description.goodsTable.Weighted')
+                  : t('description.goodsTable.ByPiece')}
+              </td>
               <td>{product.idSection}</td>
               <td>
                 <button onClick={() => handleMenuToggle(product.id)}>
@@ -176,6 +182,7 @@ const GoodsTable = () => {
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
+          <span>{t('description.goodsTable.SortBy')}</span>
           <select
             className={styles['goods-table-select']}
             onChange={e => setSortKey(e.target.value)}
@@ -193,6 +200,11 @@ const GoodsTable = () => {
               {t('description.goodsTable.IdSection')}
             </option>
           </select>
+          <div className={styles['sort-order-toggle']}>
+            <button onClick={toggleSortOrder}>
+              {sortOrder === 'asc' ? <FaArrowDown /> : <FaArrowUp />}
+            </button>
+          </div>
         </div>
         <div className={styles['button-wrapper']}>
           <button
