@@ -122,13 +122,6 @@ const GoodsTable = () => {
             <tr key={product.id}>
               <td>{product.name}</td>
               <td>{product.precode}</td>
-              {/* <td>
-                <img
-                  src={base64ToImageUrl(product.image)}
-                  alt={product.name}
-                  style={{ width: '50px', height: '50px' }}
-                />
-              </td> */}
               <td>{product.price}</td>
               <td>{product.code}</td>
               <td>

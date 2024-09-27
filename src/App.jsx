@@ -11,8 +11,8 @@ import { ToastContainer } from 'react-toastify';
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SalesAnalytics = lazy(() => import('./pages/SalesAnalytics'));
 const NotFound = lazy(() => import('./components/notFound/NotFound'));
-const ProductsDescription = lazy(() => import('./pages/ProductsDescription'));
 const GoodsDescription = lazy(() => import('./pages/GoodsDescription'));
+const Categories = lazy(() => import('./pages/Categories/'));
 
 function App() {
   return (
@@ -24,12 +24,9 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/sales-analytics" element={<SalesAnalytics />} />
-            <Route
-              path="/products-description"
-              element={<ProductsDescription />}
-            />
             <Route path="/goods-description" element={<GoodsDescription />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/categories" element={<Categories />} />
           </Routes>
           <ModalManager />
           <ToastContainer position="bottom-right" autoClose={3000} />

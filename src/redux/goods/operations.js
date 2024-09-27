@@ -1,27 +1,35 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import createSerializableError from '../../utils/serializableError';
+import asyncThunkWrapper from '../../utils/asyncThunkWrapper';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 // axios.defaults.baseURL = 'http://192.168.0.135:8080/api';
 
-const createSerializableError = error => ({
-  message: error.message,
-  name: error.name,
-  code: error.code,
-  response: error.response
-    ? {
-        status: error.response.status,
-        data: error.response.data,
-      }
-    : undefined,
-});
+// export const fetchGoods = createAsyncThunk(
+//   'goods/fetchGoods',
+//   async ({ databaseId, page = 0, limit = 1000 }, thunkAPI) => {
+//     try {
+//       const response = await axios.get('/goods', {
+//         params: {
+//           databaseId,
+//           page,
+//           limit,
+//         },
+//       });
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(createSerializableError(error));
+//     }
+//   }
+// );
 
 export const fetchGoods = createAsyncThunk(
   'goods/fetchGoods',
-  async ({ databaseId, page = 0, limit = 1000 }, thunkAPI) => {
-    try {
+  asyncThunkWrapper(
+    async ({ databaseId, page = 0, limit = 1000 }, thunkAPI) => {
       const response = await axios.get('/goods', {
         params: {
           databaseId,
@@ -30,10 +38,8 @@ export const fetchGoods = createAsyncThunk(
         },
       });
       return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(createSerializableError(error));
     }
-  }
+  )
 );
 
 export const addGoods = createAsyncThunk(

@@ -79,7 +79,18 @@ const Sidebar = () => {
               {t('description.sidebar.Goods')}
             </NavLink>
           </li>
-          <li></li>
+          <li>
+            <NavLink
+              to="/categories"
+              className={({ isActive }) =>
+                `${isActive ? styles.activeLink : styles.inactiveLink} ${
+                  styles['del-padding-left']
+                }`
+              }
+            >
+              {t('description.sidebar.Categories')}
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>

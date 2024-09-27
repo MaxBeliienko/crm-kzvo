@@ -1,0 +1,33 @@
+.categories-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.categories-list-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.categories-search-input {
+  border-radius: 12px;
+  width: 216px;
+  height: 38px;
+  box-shadow: 0 10px 60px 0 rgba(226, 236, 249, 0.5);
+  border: none;
+  padding-left: 40px;
+  background: url('../../images/search.png') no-repeat 10px center; /* Іконка лупи */
+  background-size: 24px;
+  margin-right: 10px;
+}
+
+.categories-list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.categories-list > li {
+  width: calc((100% - 30px) / 3);
+  border-radius: 10px;
+}
