@@ -1,21 +1,21 @@
 import { useDispatch } from 'react-redux';
-import { deleteGoods } from '../../redux/goods/operations';
+import { deleteCategory } from '../../redux/categories/operations';
 import { useTranslation } from 'react-i18next';
-import styles from './RemoveGoods.module.css';
+import styles from './RemoveCategory.module.css';
 
-const RemoveGoods = ({ product, onClose }) => {
+const RemoveCategory = ({ category, onClose }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const handleRemove = () => {
-    dispatch(deleteGoods({ databaseId: 1, goodsId: product.id }));
+    dispatch(deleteCategory({ categoryId: category.id }));
     onClose();
   };
 
   return (
     <div className={styles['remove-modal-container']}>
       <p>
-        {t('description.remove.QuestionText')} {product.name}?
+        {t('description.remove.QuestionText')} {category.name}?
       </p>
       <div>
         <button onClick={handleRemove}>{t('description.remove.Delete')}</button>
@@ -25,4 +25,4 @@ const RemoveGoods = ({ product, onClose }) => {
   );
 };
 
-export default RemoveGoods;
+export default RemoveCategory;

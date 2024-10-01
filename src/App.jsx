@@ -13,6 +13,7 @@ const SalesAnalytics = lazy(() => import('./pages/SalesAnalytics'));
 const NotFound = lazy(() => import('./components/notFound/NotFound'));
 const GoodsDescription = lazy(() => import('./pages/GoodsDescription'));
 const Categories = lazy(() => import('./pages/Categories/'));
+const GoodsTable = lazy(() => import('./components/goodsTable/GoodsTable'));
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/goods-description" element={<GoodsDescription />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:sectionId" element={<GoodsTable />} />
           </Routes>
           <ModalManager />
           <ToastContainer position="bottom-right" autoClose={3000} />

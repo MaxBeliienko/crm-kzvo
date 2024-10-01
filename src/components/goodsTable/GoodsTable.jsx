@@ -1,25 +1,44 @@
 import styles from './GoodsTable.module.css';
 import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods, uploadFile } from '../../redux/goods/operations';
+import { fetchGoodsByCategory } from '../../redux/categories/operations';
 import {
   selectGoods,
   selectGoodsLoading,
   selectGoodsError,
 } from '../../redux/goods/selectors';
+import { selectCategoryGoods } from '../../redux/categories/selectors';
 import { openModal } from '../../redux/modal/slice';
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from 'react-icons/fa';
 
 const GoodsTable = () => {
+  const { sectionId } = useParams();
   const dispatch = useDispatch();
-  const goods = useSelector(selectGoods);
   const loading = useSelector(selectGoodsLoading);
   const error = useSelector(selectGoodsError);
   const menuRef = useRef(null);
   const { t } = useTranslation();
 
+  // Якщо є sectionId - товари за категорією, якщо ні - усі товари
+  const goods = sectionId
+    ? useSelector(selectCategoryGoods)
+    : useSelector(selectGoods);
+
+  //! Розкоментувати коли будуть запити за окремою категорією
+  // // В залежності від наявності sectionId відправляємо різні запити
+  // useEffect(() => {
+  //   if (sectionId) {
+  //     dispatch(fetchGoodsByCategory({ sectionId }));
+  //   } else {
+  //     dispatch(fetchGoods({ databaseId: 1, page: 0 }));
+  //   }
+  // }, [dispatch, sectionId]);
+
+  //! Потім прибрати
   useEffect(() => {
     // Отримання товарів при завантаженні компонента
     dispatch(fetchGoods({ databaseId: 1, page: 0 }));

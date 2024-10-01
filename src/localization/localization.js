@@ -111,6 +111,19 @@ export const productText = {
   },
 };
 
+export const removeText = {
+  en: {
+    QuestionText: 'Do you really want to delete the',
+    Delete: 'Delete',
+    Cancel: 'Cancel',
+  },
+  ukr: {
+    QuestionText: 'Ви справді хочете видалити',
+    Delete: 'Видалити',
+    Cancel: 'Відмінити',
+  },
+};
+
 export const toastText = {
   en: {
     AddProduct: 'Product successfully added!',

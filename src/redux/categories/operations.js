@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import createSerializableError from '../../utils/serializableError';
 import asyncThunkWrapper from '../../utils/asyncThunkWrapper';
 import { toast } from 'react-toastify';
 
@@ -32,9 +31,34 @@ export const fetchCategories = createAsyncThunk(
   })
 );
 
-// export const addCategory = createAsyncThunk(
-//   'categories/addCategory',
-//   asyncThunkWrapper(async ({ categoryData }) => {
-//     const response = await axios.post(`/categories?`)
-//   })
-// );
+export const fetchGoodsByCategory = createAsyncThunk(
+  'categories/fetchGoodsByCategory',
+  asyncThunkWrapper(async ({ sectionId }) => {
+    const response = await axios.get(`/categories/${sectionId}`); //! Замінити на правильний
+    return response.data;
+  })
+);
+
+export const addCategory = createAsyncThunk(
+  'categories/addCategory',
+  asyncThunkWrapper(async ({ categoryData }) => {
+    const response = await axios.post('/categories', categoryData);
+    return response.data;
+  })
+);
+
+export const updateCategory = createAsyncThunk(
+  'categories/updateCategory',
+  asyncThunkWrapper(async ({ categoryId, categoryData }) => {
+    const response = await axios.put(`/categories/${categoryId}`, categoryData);
+    return response.data;
+  })
+);
+
+export const deleteCategory = createAsyncThunk(
+  'categories/deleteCategory',
+  asyncThunkWrapper(async ({ categoryId }) => {
+    await axios.delete(`/categories/${categoryId}`);
+    return categoryId;
+  })
+);

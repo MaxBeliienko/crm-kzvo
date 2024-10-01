@@ -7,6 +7,7 @@ import {
   notFoundText,
   toastText,
   productText,
+  removeText,
 } from './localization';
 
 i18n
@@ -22,6 +23,7 @@ i18n
             sidebar: sidebarText.en,
             goodsTable: goodsTableText.en,
             product: productText.en,
+            remove: removeText.en,
             notFound: notFoundText.en,
             toast: toastText.en,
           },
@@ -33,6 +35,7 @@ i18n
             sidebar: sidebarText.ukr,
             goodsTable: goodsTableText.ukr,
             product: productText.ukr,
+            remove: removeText.ukr,
             notFound: notFoundText.ukr,
             toast: toastText.ukr,
           },

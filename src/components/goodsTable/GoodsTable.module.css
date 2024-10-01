@@ -118,6 +118,10 @@ tr {
   text-align: center;
 }
 
+tbody > tr:hover {
+  background-color: #ddd;
+}
+
 tr::after {
   content: '';
   position: absolute;

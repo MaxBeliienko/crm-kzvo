@@ -4,6 +4,9 @@ import AddProduct from './addProduct/AddProduct';
 import EditGoods from './editGoods/EditGoods';
 import RemoveGoods from './removeGoods/RemoveGoods';
 import ViewGoods from './viewGoods/ViewGoods';
+import AddCategory from './addCategory/AddCategory';
+import EditCategory from './editCategory/EditCategory';
+import RemoveCategory from './removeCategory/RemoveCategory';
 import { closeModal } from '../redux/modal/slice';
 
 const ModalManager = () => {
@@ -37,6 +40,24 @@ const ModalManager = () => {
       return (
         <Modal onClose={handleClose}>
           <RemoveGoods onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'addCategory':
+      return (
+        <Modal onClose={handleClose}>
+          <AddCategory onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'editCategory':
+      return (
+        <Modal onClose={handleClose}>
+          <EditCategory onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'removeCategory':
+      return (
+        <Modal onClose={handleClose}>
+          <RemoveCategory onClose={handleClose} {...modalProps} />
         </Modal>
       );
 
