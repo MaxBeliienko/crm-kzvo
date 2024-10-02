@@ -65,8 +65,8 @@ const AddProduct = ({ onClose }) => {
   const goods = useSelector(selectGoods);
 
   // Перевірка унікальності preCode
-  const isPreCodeUnique = preсode => {
-    return !goods.some(product => product.precode === preсode);
+  const isPreCodeUnique = precode => {
+    return !goods.some(product => product.precode === precode);
   };
 
   // Перевіряємо значення полів форми з localStorage
@@ -81,7 +81,7 @@ const AddProduct = ({ onClose }) => {
   const handleSubmit = (values, actions) => {
     const preсode = values.precode;
     if (!isPreCodeUnique(preсode)) {
-      alert('Не унікальний!!!');
+      alert('Такий precode вже існує!!!');
       return;
     }
     const resultValues = { ...values, image: images };
@@ -96,7 +96,7 @@ const AddProduct = ({ onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, setValues }) => {
+      {({ values, setValues, resetForm }) => {
         // Зберігаємо дані в localStorage при зміні полів
         useEffect(() => {
           localStorage.setItem('addProductForm', JSON.stringify(values));
@@ -295,6 +295,14 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="taraWeight" component="span" />
             </div>
             <button type="submit">{t('description.product.Submit')}</button>
+            <button
+              type="button"
+              onClick={() => {
+                resetForm();
+              }}
+            >
+              Reset
+            </button>
           </Form>
         );
       }}

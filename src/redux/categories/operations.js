@@ -33,8 +33,8 @@ export const fetchCategories = createAsyncThunk(
 
 export const fetchGoodsByCategory = createAsyncThunk(
   'categories/fetchGoodsByCategory',
-  asyncThunkWrapper(async ({ sectionId }) => {
-    const response = await axios.get(`/categories/${sectionId}`); //! Замінити на правильний
+  asyncThunkWrapper(async ({ categoryId }) => {
+    const response = await axios.get(`/categories/${categoryId}`); //! Замінити на правильний
     return response.data;
   })
 );

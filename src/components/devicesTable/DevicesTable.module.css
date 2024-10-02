@@ -1,0 +1,83 @@
+.devices-table-wrapper {
+  width: 100%;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 10px 60px 0 rgba(226, 236, 249, 0.5);
+  padding: 30px 38px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.devices-table-wrapper > table {
+  padding: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+.devices-table-wrapper > table > thead > tr > th:first-child,
+.devices-table-wrapper > table > tbody > tr > td:first-child {
+  width: 50px;
+  max-width: 50px;
+}
+
+.devices-table-wrapper > table > thead > tr > td,
+.devices-table-wrapper > table > tbody > tr > td {
+  text-align: center;
+}
+
+td {
+  padding: 10px 10px;
+}
+
+th {
+  color: #292d32;
+  font-weight: 500;
+  font-size: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+thead {
+  background-color: #ddd;
+}
+
+td {
+  color: #292d32;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+tr {
+  margin-bottom: 10px;
+  position: relative;
+  text-align: center;
+}
+
+tbody > tr:hover {
+  background-color: #ddd;
+}
+
+tr::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #eee;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu > ul > li {
+  padding: 8px 12px;
+  cursor: pointer;
+}

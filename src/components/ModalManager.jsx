@@ -8,6 +8,9 @@ import AddCategory from './addCategory/AddCategory';
 import EditCategory from './editCategory/EditCategory';
 import RemoveCategory from './removeCategory/RemoveCategory';
 import { closeModal } from '../redux/modal/slice';
+import AddDevice from './addDevice/AddDevice';
+import EditDevice from './editDevice/EditDevice';
+import RemoveDevice from './removeDevice/RemoveDevice';
 
 const ModalManager = () => {
   const dispatch = useDispatch();
@@ -58,6 +61,24 @@ const ModalManager = () => {
       return (
         <Modal onClose={handleClose}>
           <RemoveCategory onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'addDevice':
+      return (
+        <Modal onClose={handleClose}>
+          <AddDevice onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'editDevice':
+      return (
+        <Modal onClose={handleClose}>
+          <EditDevice onClose={handleClose} {...modalProps} />
+        </Modal>
+      );
+    case 'removeDevice':
+      return (
+        <Modal onClose={handleClose}>
+          <RemoveDevice onClose={handleClose} {...modalProps} />
         </Modal>
       );
 

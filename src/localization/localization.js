@@ -7,6 +7,7 @@ export const sidebarText = {
     Products: 'PRODUCTS',
     Goods: 'Goods',
     Categories: 'Categories',
+    Devices: 'Devices',
   },
   ukr: {
     Menu: 'МЕНЮ',
@@ -16,6 +17,7 @@ export const sidebarText = {
     Products: 'ПРОДУКТИ',
     Goods: 'Товари',
     Categories: 'Категорії',
+    Devices: 'Пристрої',
   },
 };
 

@@ -91,6 +91,18 @@ const Sidebar = () => {
               {t('description.sidebar.Categories')}
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/devices"
+              className={({ isActive }) =>
+                `${isActive ? styles.activeLink : styles.inactiveLink} ${
+                  styles['del-padding-left']
+                }`
+              }
+            >
+              {t('description.sidebar.Devices')}
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>

@@ -1,0 +1,41 @@
+.remove-modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-modal-container > p {
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.remove-modal-container > div {
+  display: flex;
+  gap: 20px;
+}
+
+.remove-modal-container > div > button:first-child {
+  background-color: #ec9898;
+}
+
+.remove-modal-container > div > button:first-child:hover {
+  background-color: #f22828;
+}
+
+.remove-modal-container > div > button:last-child {
+  background-color: #98caec;
+}
+
+.remove-modal-container > div > button:last-child:hover {
+  background-color: #1157eb;
+}
+
+.remove-modal-container > div > button {
+  width: 150px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: background-color 1.3s ease;
+}
