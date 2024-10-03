@@ -113,6 +113,7 @@ const GoodsTable = () => {
     if (file) {
       dispatch(uploadFile({ databaseId: 1, file }));
     }
+    setFile(null);
   };
 
   // Таблиця

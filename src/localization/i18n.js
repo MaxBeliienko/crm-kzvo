@@ -8,6 +8,8 @@ import {
   toastText,
   productText,
   removeText,
+  categoriesText,
+  devicesText,
 } from './localization';
 
 i18n
@@ -26,6 +28,8 @@ i18n
             remove: removeText.en,
             notFound: notFoundText.en,
             toast: toastText.en,
+            categories: categoriesText.en,
+            devices: devicesText.en,
           },
         },
       },
@@ -38,6 +42,8 @@ i18n
             remove: removeText.ukr,
             notFound: notFoundText.ukr,
             toast: toastText.ukr,
+            categories: categoriesText.ukr,
+            devices: devicesText.ukr,
           },
         },
       },

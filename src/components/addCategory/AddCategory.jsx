@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory } from '../../redux/categories/operations';
 import { selectCategories } from '../../redux/categories/selectors';
-import { useState, useId, useEffect } from 'react';
+import { useState, useId } from 'react';
 import { handleFileChange } from '../../utils/handleFileChange';
 import * as Yup from 'yup';
 import styles from './AddCategory.module.css';
@@ -52,7 +52,7 @@ const AddCategory = ({ onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form className={styles.form}>
         <div>
           <label htmlFor={categoryNameId}>Name</label>
           <Field type="text" name="name" id={categoryNameId} />
@@ -60,7 +60,12 @@ const AddCategory = ({ onClose }) => {
         </div>
         <div>
           <label htmlFor={categorySectionId}>Section id</label>
-          <Field type="number" name="sectionId" id={categorySectionId} />
+          <Field
+            type="number"
+            name="sectionId"
+            id={categorySectionId}
+            className={styles['custom-number-input']}
+          />
           <ErrorMessage name="sectionId" component="span" />
         </div>
         <div>

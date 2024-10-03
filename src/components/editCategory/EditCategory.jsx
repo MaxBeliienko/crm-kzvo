@@ -58,7 +58,7 @@ const EditCategory = ({ onClose, category }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form className={styles.form}>
         <div>
           <label htmlFor={categoryNameId}>Name</label>
           <Field type="text" name="name" id={categoryNameId} />

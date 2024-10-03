@@ -1,6 +1,14 @@
 const asyncThunkWrapper = asyncFunction => async (args, thunkAPI) => {
   try {
-    return await asyncFunction(args, thunkAPI);
+    const res = await asyncFunction(args, thunkAPI);
+
+    if (thunkAPI.extra?.toast) {
+      thunkAPI.extra.toast.dismiss();
+      thunkAPI.extra.toast.success(
+        thunkAPI.extra.i18n.t('description.toast.SuccessMessage')
+      );
+    }
+    return res;
   } catch (error) {
     const serializableError = {
       message: error.message,
@@ -13,6 +21,14 @@ const asyncThunkWrapper = asyncFunction => async (args, thunkAPI) => {
           }
         : undefined,
     };
+
+    if (thunkAPI.extra?.toast) {
+      thunkAPI.extra.toast.dismiss();
+      thunkAPI.extra.toast.error(
+        thunkAPI.extra.i18n.t('description.toast.ErrorMessage')
+      );
+    }
+
     return thunkAPI.rejectWithValue(serializableError);
   }
 };

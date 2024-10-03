@@ -9,6 +9,21 @@
   gap: 40px;
 }
 
+.devices-table-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.devices-table-info > button {
+  background-color: #d4d4d4;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.devices-table-info > button:hover {
+  background-color: antiquewhite;
+}
+
 .devices-table-wrapper > table {
   padding: 0;
   width: 100%;
@@ -80,4 +95,5 @@ tr::after {
 .dropdown-menu > ul > li {
   padding: 8px 12px;
   cursor: pointer;
+  text-align: left;
 }

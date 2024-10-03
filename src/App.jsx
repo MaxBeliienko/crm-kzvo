@@ -15,6 +15,8 @@ const GoodsDescription = lazy(() => import('./pages/GoodsDescription'));
 const Categories = lazy(() => import('./pages/Categories/'));
 const GoodsTable = lazy(() => import('./components/goodsTable/GoodsTable'));
 const Devices = lazy(() => import('./pages/Devices'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const SignIn = lazy(() => import('./pages/SignIn'));
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/sales-analytics" element={<SalesAnalytics />} />
             <Route path="/goods-description" element={<GoodsDescription />} />
             <Route path="*" element={<NotFound />} />

@@ -18,8 +18,16 @@ const DropdownMenu = ({ menuRef, closeMenu }) => {
             Add product
           </button>
         </li>
-        <li>Second table</li>
-        <li>Third table</li>
+        <li>
+          <button onClick={() => handleAction('addCategory', null)}>
+            Add category
+          </button>
+        </li>
+        <li>
+          <button onClick={() => handleAction('addDevice', null)}>
+            Add device
+          </button>
+        </li>
       </ul>
     </div>
   );

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import asyncThunkWrapper from '../../utils/asyncThunkWrapper';
-import { toast } from 'react-toastify';
 
 export const fetchAllDatabase = createAsyncThunk(
   'devices/fetchAllDatabase',

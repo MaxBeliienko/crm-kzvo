@@ -31,7 +31,7 @@ const CategoriesList = () => {
   return (
     <div className={styles['categories-list-container']}>
       <div className={styles['categories-list-info-wrapper']}>
-        <h2>Categories list</h2>
+        <h2>{t('description.categories.Title')}</h2>
         <input
           className={styles['categories-search-input']}
           type="text"
@@ -40,7 +40,7 @@ const CategoriesList = () => {
           onChange={e => setSearchTerm(e.target.value)}
         />
         <button onClick={() => handleAction('addCategory')}>
-          Add category
+          {t('description.categories.AddButton')}
         </button>
       </div>
       <ul className={styles['categories-list']}>

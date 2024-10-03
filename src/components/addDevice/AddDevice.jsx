@@ -1,8 +1,8 @@
 import styles from './AddDevice.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addDatabaseConnection } from '../../redux/devices/operations';
-import { useState, useId, useEffect } from 'react';
+import { useId } from 'react';
 import * as Yup from 'yup';
 
 const FeedbackSchema = Yup.object().shape({
@@ -24,8 +24,25 @@ const AddDevice = ({ onClose }) => {
   };
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(addDatabaseConnection({ databaseData: values }));
+    const url = `jdbc:mysql://${values.databaseIp}/${values.databaseName}`;
+    const dataToSend = {
+      name: values.name,
+      url,
+      username: 'root',
+      password: '12345',
+      columns: [
+        {
+          position: 0,
+          name: 'default_column',
+          active: true,
+        },
+      ],
+    };
+
+    console.log('Дані для відправки:', dataToSend);
+
+    dispatch(addDatabaseConnection({ databaseData: dataToSend }));
+    onClose();
   };
 
   return (
@@ -34,7 +51,7 @@ const AddDevice = ({ onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form className={styles.form}>
         <div>
           <label htmlFor={deviceNameId}>Name</label>
           <Field type="text" name="name" id={deviceNameId} />

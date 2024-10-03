@@ -19,7 +19,8 @@ const FeedbackSchema = Yup.object().shape({
   description: Yup.string(),
   before_validity: Yup.number(),
   type: Yup.string(),
-  image: Yup.array().of(Yup.string()),
+  // image: Yup.array().of(Yup.string()),
+  image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
@@ -66,10 +67,10 @@ const EditGoods = ({ product, onClose }) => {
     idSection: idSection,
     idTemplate: idTemplate,
     barcodeCoding: barcodeCoding,
-    description: description,
+    description: description || '',
     before_validity: before_validity,
     type: type,
-    image: image || [],
+    image: image || '',
     weight: weight,
     taraWeight: taraWeight,
   };
@@ -218,7 +219,7 @@ const EditGoods = ({ product, onClose }) => {
               <Field type="text" name="type" id={productTypeId} />
               <ErrorMessage name="type" component="span" />
             </div>
-            <div>
+            {/* <div>
               <label htmlFor={productImageId}>
                 {t('description.product.Image')}
               </label>
@@ -229,6 +230,13 @@ const EditGoods = ({ product, onClose }) => {
                 accept="image/*"
                 onChange={event => handleFileChange(event, setImages)}
               />
+              <ErrorMessage name="image" component="span" />
+            </div> */}
+            <div>
+              <label htmlFor={productImageId}>
+                {t('description.product.Image')}
+              </label>
+              <Field type="text" name="image" id={productImageId} />
               <ErrorMessage name="image" component="span" />
             </div>
             <div style={{ display: 'none' }}>

@@ -4,9 +4,11 @@ import { selectDevices } from '../../redux/devices/selectors';
 import { useEffect, useState, useRef } from 'react';
 import { fetchAllDatabase } from '../../redux/devices/operations';
 import { openModal } from '../../redux/modal/slice';
+import { useTranslation } from 'react-i18next';
 
 const DevicesTable = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const devices = useSelector(selectDevices);
   const menuRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(null);
@@ -38,21 +40,21 @@ const DevicesTable = () => {
 
   return (
     <div className={styles['devices-table-wrapper']}>
-      <div>
-        <h2>All devices</h2>
+      <div className={styles['devices-table-info']}>
+        <h2>{t('description.devices.Title')}</h2>
         <button onClick={() => handleAction('addDevice', null)}>
-          Add device
+          {t('description.devices.AddButton')}
         </button>
       </div>
       <table>
         <thead>
           <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Model</th>
-            <th>Database name</th>
+            <th>{t('description.devices.Name')}</th>
+            <th>{t('description.devices.Model')}</th>
+            <th>{t('description.devices.DbName')}</th>
             <th>IP</th>
-            <th>Actions</th>
+            <th>{t('description.devices.Actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -74,12 +76,12 @@ const DevicesTable = () => {
                     <div ref={menuRef} className={styles['dropdown-menu']}>
                       <ul>
                         <li onClick={() => handleAction('editDevice', device)}>
-                          Редагувати
+                          {t('description.devices.EditDevice')}
                         </li>
                         <li
                           onClick={() => handleAction('removeDevice', device)}
                         >
-                          Видалити
+                          {t('description.devices.RemoveDevice')}
                         </li>
                       </ul>
                     </div>

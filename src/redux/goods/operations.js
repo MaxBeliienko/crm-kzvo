@@ -24,66 +24,46 @@ export const fetchGoods = createAsyncThunk(
 
 export const addGoods = createAsyncThunk(
   'goods/addGoods',
-  async ({ databaseId, goodsData }, thunkAPI) => {
-    try {
-      const response = await axios.post(
-        `/goods?databaseId=${databaseId}`,
-        goodsData
-      );
-      toast.success(thunkAPI.extra.i18n.t('description.toast.AddProduct'));
-      return response.data;
-    } catch (error) {
-      toast.error(thunkAPI.extra.i18n.t('description.toast.AddProductError'));
-      return thunkAPI.rejectWithValue(createSerializableError(error));
-    }
-  }
+  asyncThunkWrapper(async ({ databaseId, goodsData }, thunkAPI) => {
+    const response = await axios.post(
+      `/goods?databaseId=${databaseId}`,
+      goodsData
+    );
+    return response.data;
+  })
 );
 
 export const updateGoods = createAsyncThunk(
   'goods/updateGoods',
-  async ({ databaseId, goodsId, goodsData }, thunkAPI) => {
-    try {
-      const response = await axios.put(
-        `/goods/${goodsId}?databaseId=${databaseId}`,
-        goodsData
-      );
-      toast.success(thunkAPI.extra.i18n.t('description.toast.EditProduct'));
-      return response.data;
-    } catch (error) {
-      toast.error(thunkAPI.extra.i18n.t('description.toast.EditProductError'));
-      return thunkAPI.rejectWithValue(createSerializableError(error));
-    }
-  }
+  asyncThunkWrapper(async ({ databaseId, goodsId, goodsData }, thunkAPI) => {
+    const response = await axios.put(
+      `/goods/${goodsId}?databaseId=${databaseId}`,
+      goodsData
+    );
+    return response.data;
+  })
 );
 
 export const deleteGoods = createAsyncThunk(
   'goods/deleteGoods',
-  async ({ databaseId, goodsId }, thunkAPI) => {
-    try {
-      await axios.delete(`/goods/${goodsId}?databaseId=${databaseId}`);
-      toast.success(thunkAPI.extra.i18n.t('description.toast.DeleteProduct'));
-      return goodsId;
-    } catch (error) {
-      toast.error(
-        thunkAPI.extra.i18n.t('description.toast.DeleteProductError')
-      );
-      return thunkAPI.rejectWithValue(createSerializableError(error));
-    }
-  }
+  asyncThunkWrapper(async ({ databaseId, goodsId }, thunkAPI) => {
+    await axios.delete(`/goods/${goodsId}?databaseId=${databaseId}`);
+    return goodsId;
+  })
 );
 
 export const uploadFile = createAsyncThunk(
   'goods/uploadFile',
-  async (
-    {
-      databaseId,
-      file,
-      columnsJson = 'code;pre_code;id_scales;id_sections;id_templates;id_barcodes;name;price;type;data',
-      skipHeader = true,
-    },
-    thunkAPI
-  ) => {
-    try {
+  asyncThunkWrapper(
+    async (
+      {
+        databaseId,
+        file,
+        columnsJson = 'code;pre_code;id_scales;id_sections;id_templates;id_barcodes;name;price;type;data',
+        skipHeader = true,
+      },
+      thunkAPI
+    ) => {
       const formData = new FormData();
       formData.append('file', file);
       const response = await axios.post(
@@ -91,10 +71,7 @@ export const uploadFile = createAsyncThunk(
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
-      toast.success(thunkAPI.extra.i18n.t('description.toast.AddGoodsFile'));
       return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(createSerializableError(error));
     }
-  }
+  )
 );

@@ -4,6 +4,7 @@ import { goodsReducer } from './goods/slice';
 import { modalReducer } from './modal/slice';
 import { categoriesReducer } from './categories/slice';
 import { devicesReducer } from './devices/slice';
+import { toast } from 'react-toastify';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
       thunk: {
         extraArgument: {
           i18n,
+          toast,
         },
       },
     }),

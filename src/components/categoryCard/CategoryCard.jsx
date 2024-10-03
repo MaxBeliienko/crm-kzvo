@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/modal/slice';
 import { LuArrowDownWideNarrow } from 'react-icons/lu';
+import { useTranslation } from 'react-i18next';
 
 const CategoryCard = ({ category }) => {
   const { name, sectionId } = category;
@@ -12,6 +13,7 @@ const CategoryCard = ({ category }) => {
   const dispatch = useDispatch();
   const menuRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleCategoryClick = () => {
     navigate(`/categories/${sectionId}`);
@@ -53,8 +55,12 @@ const CategoryCard = ({ category }) => {
         {menuOpen && (
           <div ref={menuRef}>
             <ul>
-              <li onClick={() => handleAction('editCategory')}>Edit</li>
-              <li onClick={() => handleAction('removeCategory')}>Remove</li>
+              <li onClick={() => handleAction('editCategory')}>
+                {t('description.categories.EditCategory')}
+              </li>
+              <li onClick={() => handleAction('removeCategory')}>
+                {t('description.categories.RemoveCategory')}
+              </li>
             </ul>
           </div>
         )}

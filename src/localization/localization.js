@@ -126,6 +126,29 @@ export const removeText = {
   },
 };
 
+export const devicesText = {
+  en: {
+    Title: 'Devices list',
+    AddButton: 'Add device',
+    Name: 'Name',
+    Model: 'Model',
+    DbName: 'Database name',
+    Actions: 'Actions',
+    EditDevice: 'Edit',
+    RemoveDevice: 'Remove',
+  },
+  ukr: {
+    Title: 'Список пристроїв',
+    AddButton: 'Додати пристрій',
+    Name: 'Назва',
+    Model: 'Модель',
+    DbName: 'Назва бази даних',
+    Actions: 'Дія',
+    EditDevice: 'Редагувати',
+    RemoveDevice: 'Видалити',
+  },
+};
+
 export const toastText = {
   en: {
     AddProduct: 'Product successfully added!',
@@ -136,6 +159,14 @@ export const toastText = {
     DeleteProductError: 'Failed to delete product!',
     AddGoodsFile:
       'The product file has been added successfully! Please refresh the page!',
+    AddCategory: 'Category successfully added!',
+    AddCategoryError: 'Failed to add category!',
+    EditCategory: 'Category successfully edited!',
+    EditCategoryError: 'Failed to edit category!',
+    DeleteCategory: 'Category successfully deleted!',
+    DeleteCategoryError: 'Failed to delete category!',
+    SuccessMessage: 'Success',
+    ErrorMessage: 'Error',
   },
   ukr: {
     AddProduct: 'Товар успішно доданий!',
@@ -146,6 +177,29 @@ export const toastText = {
     DeleteProductError: 'Помилка видалення товару!',
     AddGoodsFile:
       'Файл товарів успішно доданий! Оновіть, будь ласка, сторінку!',
+    AddCategory: 'Категорія успішно додана!',
+    AddCategoryError: 'Категорію не було додано!',
+    EditCategory: 'Категорія успішно змінена!',
+    EditCategoryError: 'Помилка оновлення даних категорії!',
+    DeleteCategory: 'Категорія успішно видалена!',
+    DeleteCategoryError: 'Помилка видалення категорії!',
+    SuccessMessage: 'Успішно',
+    ErrorMessage: 'Помилка',
+  },
+};
+
+export const categoriesText = {
+  en: {
+    Title: 'Categories list',
+    AddButton: 'Add category',
+    EditCategory: 'Edit',
+    RemoveCategory: 'Remove',
+  },
+  ukr: {
+    Title: 'Список категорій',
+    AddButton: 'Додати категорію',
+    EditCategory: 'Редагувати',
+    RemoveCategory: 'Видалити',
   },
 };
 
