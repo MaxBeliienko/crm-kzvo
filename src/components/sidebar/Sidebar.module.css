@@ -21,6 +21,11 @@
   flex-direction: column;
   gap: 5px;
   align-items: start;
+  width: 100%;
+}
+
+.sidebar-nav-list {
+  width: 100%;
 }
 
 .sidebar-menu-list {

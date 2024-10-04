@@ -215,3 +215,13 @@ export const notFoundText = {
       'Ви будете перенаправлені на домашню сторінку через 5 секунд',
   },
 };
+
+export const signUpText = {
+  en: {},
+  ukr: {},
+};
+
+export const signInText = {
+  en: {},
+  ukr: {},
+};

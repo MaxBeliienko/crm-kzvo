@@ -10,6 +10,8 @@ import {
   removeText,
   categoriesText,
   devicesText,
+  signUpText,
+  signInText,
 } from './localization';
 
 i18n
@@ -30,6 +32,8 @@ i18n
             toast: toastText.en,
             categories: categoriesText.en,
             devices: devicesText.en,
+            signUp: signUpText.en,
+            signIn: signInText.en,
           },
         },
       },
@@ -44,6 +48,8 @@ i18n
             toast: toastText.ukr,
             categories: categoriesText.ukr,
             devices: devicesText.ukr,
+            signUp: signUpText.ukr,
+            signIn: signInText.ukr,
           },
         },
       },

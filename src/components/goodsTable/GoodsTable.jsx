@@ -109,9 +109,12 @@ const GoodsTable = () => {
   const handleFileChange = event => {
     setFile(event.target.files[0]); // Зберігаємо вибраний файл
   };
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     if (file) {
-      dispatch(uploadFile({ databaseId: 1, file }));
+      const result = await dispatch(uploadFile({ databaseId: 1, file }));
+      if (!result.error) {
+        window.location.reload();
+      }
     }
     setFile(null);
   };

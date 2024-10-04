@@ -84,7 +84,8 @@ const AddProduct = ({ onClose }) => {
       alert('Такий precode вже існує!!!');
       return;
     }
-    const resultValues = { ...values, image: images };
+    const type = values.pcsGood ? 1 : 'кг';
+    const resultValues = { ...values, image: images, type };
     dispatch(addGoods({ databaseId: 1, goodsData: resultValues }));
     localStorage.removeItem('addProductForm');
     onClose();

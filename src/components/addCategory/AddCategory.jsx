@@ -41,6 +41,7 @@ const AddCategory = ({ onClose }) => {
       alert('Такий sectionId вже існує');
       return;
     }
+
     const resultValues = { ...values, images: images };
     dispatch(addCategory({ categoryData: resultValues }));
     onClose();

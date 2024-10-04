@@ -1,11 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateGoods } from '../../redux/goods/operations';
 import * as Yup from 'yup';
 import { useId, useState } from 'react';
 import styles from '../addProduct/AddProduct.module.css';
 import { handleFileChange } from '../../utils/handleFileChange';
 import { useTranslation } from 'react-i18next';
+import { selectGoods } from '../../redux/goods/selectors';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -78,12 +79,25 @@ const EditGoods = ({ product, onClose }) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const goods = useSelector(selectGoods);
 
   // Локальний стан для зображень
   const [images, setImages] = useState([]);
 
+  const isPreCodeUnique = (precode, product) => {
+    return !goods.some(
+      item => item.precode === precode && item.id !== product.id
+    );
+  };
+
   const handleSubmit = (values, actions) => {
-    const resultValues = { ...values, image: images };
+    const type = values.pcsGood ? 1 : 'кг';
+    const preсode = values.precode;
+    if (!isPreCodeUnique(preсode, product)) {
+      alert('Такий precode вже існує!!!');
+      return;
+    }
+    const resultValues = { ...values, image: images, type };
 
     dispatch(
       updateGoods({
@@ -115,7 +129,12 @@ const EditGoods = ({ product, onClose }) => {
               <label htmlFor={productPriceId}>
                 {t('description.product.Price')}
               </label>
-              <Field type="number" name="price" id={productPriceId} />
+              <Field
+                type="number"
+                name="price"
+                id={productPriceId}
+                className={styles['custom-number-input']}
+              />
               <ErrorMessage name="price" component="span" />
             </div>
 
@@ -123,7 +142,12 @@ const EditGoods = ({ product, onClose }) => {
               <label htmlFor={productPrecodeId}>
                 {t('description.product.Precode')}
               </label>
-              <Field type="number" name="precode" id={productPrecodeId} />
+              <Field
+                type="number"
+                name="precode"
+                id={productPrecodeId}
+                className={styles['custom-number-input']}
+              />
 
               <ErrorMessage name="precode" component="span" />
             </div>
@@ -131,21 +155,36 @@ const EditGoods = ({ product, onClose }) => {
               <label htmlFor={productCodeId}>
                 {t('description.product.Code')}
               </label>
-              <Field type="number" name="code" id={productCodeId} />
+              <Field
+                type="number"
+                name="code"
+                id={productCodeId}
+                className={styles['custom-number-input']}
+              />
               <ErrorMessage name="code" component="span" />
             </div>
             <div>
               <label htmlFor={productIdSectionId}>
                 {t('description.product.IdSection')}
               </label>
-              <Field type="number" name="idSection" id={productIdSectionId} />
+              <Field
+                type="number"
+                name="idSection"
+                id={productIdSectionId}
+                className={styles['custom-number-input']}
+              />
               <ErrorMessage name="idSection" component="span" />
             </div>
             <div>
               <label htmlFor={productIdTemplateId}>
                 {t('description.product.IdTemplate')}
               </label>
-              <Field type="number" name="idTemplate" id={productIdTemplateId} />
+              <Field
+                type="number"
+                name="idTemplate"
+                id={productIdTemplateId}
+                className={styles['custom-number-input']}
+              />
               <ErrorMessage name="idTemplate" component="span" />
             </div>
             <div>
@@ -209,6 +248,7 @@ const EditGoods = ({ product, onClose }) => {
                 type="number"
                 name="before_validity"
                 id={productBeforeValidityId}
+                className={styles['custom-number-input']}
               />
               <ErrorMessage name="before_validity" component="span" />
             </div>

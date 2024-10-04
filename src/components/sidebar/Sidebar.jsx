@@ -66,7 +66,7 @@ const Sidebar = () => {
         <span className={styles['sidebar-span-title']}>
           {t('description.sidebar.Products')}
         </span>
-        <ul>
+        <ul className={styles['sidebar-nav-list']}>
           <li>
             <NavLink
               to="/goods-description"
