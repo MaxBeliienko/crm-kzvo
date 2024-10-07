@@ -1,0 +1,50 @@
+.homeTemp {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.homeTemp > p {
+  font-size: medium;
+}
+
+.scale {
+  width: 100px;
+  height: 100px;
+  background-color: #007bff;
+  border-radius: 50%;
+  position: relative;
+  margin: 20px auto;
+  animation: scaleAnimation 2s infinite;
+  transition: background-color 0.9s ease;
+}
+
+.scale:hover {
+  background-color: cadetblue;
+}
+
+@keyframes scaleAnimation {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 1.2em;
+}
+
+.contact-info > a {
+  transition: color 0.9s ease, font-weight 0.9s ease;
+}
+
+.contact-info > a:hover {
+  font-weight: bold;
+  color: blue;
+}

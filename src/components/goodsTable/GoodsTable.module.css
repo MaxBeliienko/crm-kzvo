@@ -25,6 +25,10 @@
   gap: 10px;
 }
 
+.sort-order-toggle {
+  margin-right: 40px;
+}
+
 .button-wrapper > button {
   background-color: #d4d4d4;
   padding: 5px;

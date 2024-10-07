@@ -3,6 +3,7 @@ import {
   fetchCategories,
   fetchGoodsByCategory,
   addCategory,
+  addCategoryWithId,
   updateCategory,
   deleteCategory,
 } from './operations';
@@ -20,6 +21,7 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState: {
     categories: [],
+    totalCount: null,
     categoryGoods: [],
     loading: false,
     error: null,
@@ -30,7 +32,8 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.categories = action.payload;
+        state.categories = action.payload.sections;
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchCategories.rejected, handleRejected)
       .addCase(fetchGoodsByCategory.pending, handlePending)
@@ -47,6 +50,13 @@ const categoriesSlice = createSlice({
         state.categories.push(action.payload);
       })
       .addCase(addCategory.rejected, handleRejected)
+      .addCase(addCategoryWithId.pending, handlePending)
+      .addCase(addCategoryWithId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.categories.push(action.payload);
+      })
+      .addCase(addCategoryWithId.rejected, handleRejected)
       .addCase(updateCategory.pending, handlePending)
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.loading = false;
@@ -63,7 +73,7 @@ const categoriesSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.categories = state.categories.filter(
-          (category = category.id !== action.payload)
+          category => category.id !== action.payload
         );
       })
       .addCase(deleteCategory.rejected, handleRejected);

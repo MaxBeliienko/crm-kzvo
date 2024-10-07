@@ -45,12 +45,14 @@ const Header = () => {
         placeholder="Search"
       />
 
-      <div>
+      <div className={styles.test}>
         <button onClick={toggleMenu}>
           <GrAdd />
         </button>
+        {isMenuOpen && (
+          <DropdownMenu closeMenu={toggleMenu} menuRef={menuRef} />
+        )}
       </div>
-      {isMenuOpen && <DropdownMenu closeMenu={toggleMenu} menuRef={menuRef} />}
       <LocalizationSwitcher />
     </header>
   );

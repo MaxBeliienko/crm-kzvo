@@ -1,6 +1,7 @@
 import styles from './DropdownMenu.module.css';
 import { useDispatch } from 'react-redux';
-import { openModal, closeModal } from '../../redux/modal/slice';
+import { openModal } from '../../redux/modal/slice';
+import { useTranslation } from 'react-i18next';
 
 const DropdownMenu = ({ menuRef, closeMenu }) => {
   const dispatch = useDispatch();
@@ -10,22 +11,24 @@ const DropdownMenu = ({ menuRef, closeMenu }) => {
     closeMenu();
   };
 
+  const { t } = useTranslation();
+
   return (
     <div ref={menuRef} className={styles['dropdown-menu']}>
       <ul>
         <li>
           <button onClick={() => handleAction('addProduct', null)}>
-            Add product
+            {t('description.dropdown.Product')}
           </button>
         </li>
         <li>
           <button onClick={() => handleAction('addCategory', null)}>
-            Add category
+            {t('description.dropdown.Category')}
           </button>
         </li>
         <li>
           <button onClick={() => handleAction('addDevice', null)}>
-            Add device
+            {t('description.dropdown.Device')}
           </button>
         </li>
       </ul>

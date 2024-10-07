@@ -1,12 +1,10 @@
-import StatList from '../components/statList/StatList';
-import VideoCont from '../components/videoCont/VideoCont';
 import styles from '../App.module.css';
+import HomeTemporary from '../components/homeTemporary/HomeTemporary';
 
 const HomePage = () => {
   return (
     <div className={styles['page-container']}>
-      <StatList />
-      <VideoCont />
+      <HomeTemporary />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const CategoriesList = () => {
 
   // Запит для отримання категорій
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategories({ databaseId: 1 }));
   }, [dispatch]);
 
   // Логіка пошуку
@@ -46,7 +46,7 @@ const CategoriesList = () => {
       <ul className={styles['categories-list']}>
         {filteredCategories.map(category => {
           return (
-            <li key={category.sectionId}>
+            <li key={category.id}>
               <CategoryCard category={category} />
             </li>
           );

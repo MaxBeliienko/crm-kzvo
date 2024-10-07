@@ -9,11 +9,13 @@ import {
   selectGoods,
   selectGoodsLoading,
   selectGoodsError,
+  selectTotalCountGoods,
 } from '../../redux/goods/selectors';
 import { selectCategoryGoods } from '../../redux/categories/selectors';
 import { openModal } from '../../redux/modal/slice';
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from 'react-icons/fa';
+import Pagination from '../pagination/Pagination';
 
 const GoodsTable = () => {
   const { sectionId } = useParams();
@@ -22,6 +24,12 @@ const GoodsTable = () => {
   const error = useSelector(selectGoodsError);
   const menuRef = useRef(null);
   const { t } = useTranslation();
+
+  const [limit, setLimit] = useState(10);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalItems = useSelector(selectTotalCountGoods);
+  const totalPages = Math.ceil(totalItems / limit);
 
   // Якщо є sectionId - товари за категорією, якщо ні - усі товари
   const goods = sectionId
@@ -41,8 +49,17 @@ const GoodsTable = () => {
   //! Потім прибрати
   useEffect(() => {
     // Отримання товарів при завантаженні компонента
-    dispatch(fetchGoods({ databaseId: 1, page: 0 }));
-  }, [dispatch]);
+    dispatch(
+      fetchGoods({ databaseId: 1, page: currentPage - 1, limit: limit })
+    );
+  }, [dispatch, currentPage, limit]);
+
+  const handlePageChange = newPage => setCurrentPage(newPage);
+
+  const handleLimitChange = event => {
+    setLimit(Number(event.target.value));
+    setCurrentPage(1);
+  };
 
   // Функція для перетворення Base64 в URL зображення
   const base64ToImageUrl = base64String => {
@@ -221,6 +238,16 @@ const GoodsTable = () => {
               {sortOrder === 'asc' ? <FaArrowDown /> : <FaArrowUp />}
             </button>
           </div>
+          <select
+            className={styles['goods-table-limit-select']}
+            value={limit}
+            onChange={handleLimitChange}
+          >
+            <option value={10}>10</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={500}>500</option>
+          </select>
         </div>
         <div className={styles['button-wrapper']}>
           <button
@@ -254,6 +281,12 @@ const GoodsTable = () => {
         </div>
       </div>
       {content}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

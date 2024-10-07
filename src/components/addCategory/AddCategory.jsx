@@ -1,6 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory } from '../../redux/categories/operations';
+import {
+  addCategory,
+  addCategoryWithId,
+} from '../../redux/categories/operations';
 import { selectCategories } from '../../redux/categories/selectors';
 import { useState, useId } from 'react';
 import { handleFileChange } from '../../utils/handleFileChange';
@@ -9,13 +12,13 @@ import styles from './AddCategory.module.css';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
-  sectionId: Yup.number().required('Required'),
+  sectionId: Yup.number().nullable(),
   images: Yup.array().of(Yup.string()),
 });
 
 const initialValues = {
   name: '',
-  sectionId: 0,
+  sectionId: '',
   images: [],
 };
 
@@ -36,14 +39,28 @@ const AddCategory = ({ onClose }) => {
   const [images, setImages] = useState([]);
 
   const handleSubmit = (values, actions) => {
-    const sectionId = values.sectionId;
-    if (!isSectionIdUnique(sectionId)) {
+    let { sectionId, name } = values;
+    sectionId = sectionId ? parseInt(sectionId, 10) : undefined;
+    if (sectionId && !isSectionIdUnique(sectionId)) {
       alert('Такий sectionId вже існує');
       return;
     }
 
-    const resultValues = { ...values, images: images };
-    dispatch(addCategory({ categoryData: resultValues }));
+    // const resultValues = { ...values, images: images };
+    const resultValues = {
+      id: sectionId || undefined,
+      name,
+      parentCategoryId: 0,
+      images: null,
+    };
+
+    if (sectionId) {
+      dispatch(
+        addCategoryWithId({ categoryData: { ...resultValues, id: sectionId } })
+      );
+    } else {
+      dispatch(addCategory({ categoryData: resultValues }));
+    }
     onClose();
   };
 
@@ -60,7 +77,7 @@ const AddCategory = ({ onClose }) => {
           <ErrorMessage name="name" component="span" />
         </div>
         <div>
-          <label htmlFor={categorySectionId}>Section id</label>
+          <label htmlFor={categorySectionId}>Section id (optional)</label>
           <Field
             type="number"
             name="sectionId"

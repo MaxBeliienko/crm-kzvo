@@ -20,6 +20,7 @@ const goodsSlice = createSlice({
   name: 'goods',
   initialState: {
     goods: [],
+    totalCount: null,
     loading: false,
     error: null,
   },
@@ -29,13 +30,15 @@ const goodsSlice = createSlice({
       .addCase(fetchGoods.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.goods = action.payload;
+        state.goods = action.payload.goods;
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchGoods.rejected, handleRejected)
       .addCase(addGoods.pending, handlePending)
       .addCase(addGoods.fulfilled, (state, action) => {
         state.loading = false;
         state.goods.push(action.payload);
+        state.totalCount = state.totalCount + 1;
       })
       .addCase(addGoods.rejected, handleRejected)
       .addCase(updateGoods.pending, handlePending)

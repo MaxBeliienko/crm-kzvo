@@ -1,7 +1,7 @@
 .dropdown-menu {
   position: absolute;
-  top: 50px; /* Відстань від верхньої частини кнопки */
-  right: 20px;
+  top: 40px;
+  right: 0;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;

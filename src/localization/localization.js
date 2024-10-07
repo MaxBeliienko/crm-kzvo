@@ -3,8 +3,7 @@ export const sidebarText = {
     Menu: 'MENU',
     Dashboard: 'Dashboard',
     Homepage: 'Homepage',
-    SalesAnalytics: 'Sales analytics',
-    Products: 'PRODUCTS',
+    Products: 'TABLES',
     Goods: 'Goods',
     Categories: 'Categories',
     Devices: 'Devices',
@@ -13,8 +12,7 @@ export const sidebarText = {
     Menu: 'МЕНЮ',
     Dashboard: 'Панель',
     Homepage: 'Домашня сторінка',
-    SalesAnalytics: 'Аналітика продажів',
-    Products: 'ПРОДУКТИ',
+    Products: 'ТАБЛИЦІ',
     Goods: 'Товари',
     Categories: 'Категорії',
     Devices: 'Пристрої',
@@ -213,6 +211,19 @@ export const notFoundText = {
       'Вибачте, сторінку на яку ви намагаєтесь перейти не існує.',
     RedirectMessage:
       'Ви будете перенаправлені на домашню сторінку через 5 секунд',
+  },
+};
+
+export const dropdownMenuText = {
+  en: {
+    Product: 'Add product',
+    Category: 'Add category',
+    Device: 'Add device',
+  },
+  ukr: {
+    Product: 'Додати товар',
+    Category: 'Додати категорію',
+    Device: 'Додати пристрій',
   },
 };
 

@@ -12,6 +12,7 @@ import {
   devicesText,
   signUpText,
   signInText,
+  dropdownMenuText,
 } from './localization';
 
 i18n
@@ -34,6 +35,7 @@ i18n
             devices: devicesText.en,
             signUp: signUpText.en,
             signIn: signInText.en,
+            dropdown: dropdownMenuText.en,
           },
         },
       },
@@ -50,6 +52,7 @@ i18n
             devices: devicesText.ukr,
             signUp: signUpText.ukr,
             signIn: signInText.ukr,
+            dropdown: dropdownMenuText.ukr,
           },
         },
       },

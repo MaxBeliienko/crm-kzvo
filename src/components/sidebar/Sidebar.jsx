@@ -49,16 +49,6 @@ const Sidebar = () => {
                     {t('description.sidebar.Homepage')}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink
-                    to="/sales-analytics"
-                    className={({ isActive }) =>
-                      isActive ? styles.activeLink : styles.inactiveLink
-                    }
-                  >
-                    {t('description.sidebar.SalesAnalytics')}
-                  </NavLink>
-                </li>
               </ul>
             )}
           </li>

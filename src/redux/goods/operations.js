@@ -8,18 +8,16 @@ axios.defaults.baseURL = 'http://localhost:8080/api';
 
 export const fetchGoods = createAsyncThunk(
   'goods/fetchGoods',
-  asyncThunkWrapper(
-    async ({ databaseId, page = 0, limit = 1000 }, thunkAPI) => {
-      const response = await axios.get('/goods', {
-        params: {
-          databaseId,
-          page,
-          limit,
-        },
-      });
-      return response.data;
-    }
-  )
+  asyncThunkWrapper(async ({ databaseId, page = 0, limit = 10 }, thunkAPI) => {
+    const response = await axios.get('/goods', {
+      params: {
+        databaseId,
+        page,
+        limit,
+      },
+    });
+    return response.data;
+  })
 );
 
 export const addGoods = createAsyncThunk(

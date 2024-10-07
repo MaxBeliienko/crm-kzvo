@@ -9,7 +9,7 @@ import styles from './EditCategory.module.css';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
-  sectionId: Yup.number().required('Required'),
+  sectionId: Yup.number().nullable(),
   images: Yup.array().of(Yup.string()),
 });
 
@@ -22,33 +22,43 @@ const EditCategory = ({ onClose, category }) => {
 
   const categories = useSelector(selectCategories);
 
-  const { name, sectionId } = category;
+  const { name, id } = category;
 
   const initialValues = {
     name: name,
-    sectionId: sectionId,
+    sectionId: id,
     images: [],
   };
 
   // Перевірка унікальності sectionId
   const isSectionIdUnique = sectionId => {
     return !categories.some(
-      category =>
-        category.sectionId === sectionId &&
-        category.sectionId !== category.sectionId
+      category => category.id === sectionId && category.id !== id
     );
   };
 
   const [images, setImages] = useState([]);
 
   const handleSubmit = (values, actions) => {
-    const sectionId = values.sectionId;
-    if (!isSectionIdUnique(sectionId)) {
+    let { sectionId, name } = values;
+    sectionId = sectionId ? parseInt(sectionId, 10) : undefined;
+    if (sectionId && !isSectionIdUnique(sectionId)) {
       alert('Такий sectionId вже існує');
       return;
     }
-    const resultValues = { ...values, images: images };
-    dispatch(updateCategory({ categoryData: resultValues }));
+    const resultValues = {
+      id: sectionId || id,
+      name,
+      parentCategoryId: 0,
+      images: null,
+    };
+    dispatch(
+      updateCategory({
+        databaseId: 1,
+        sectionId: id,
+        categoryData: resultValues,
+      })
+    );
     onClose();
   };
 
