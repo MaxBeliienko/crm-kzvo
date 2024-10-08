@@ -39,7 +39,11 @@ const ViewGoods = ({ product }) => {
       </div>
       <div className={styles['div5']}>
         <p>{t('description.product.PcsGood')}: </p>
-        <p>{pcsGood}</p>
+        <p>
+          {pcsGood
+            ? t('description.product.ByPiece')
+            : t('description.product.Weighted')}
+        </p>
       </div>
       <div className={styles['div6']}>
         <p>{t('description.product.Price')}:</p>

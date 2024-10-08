@@ -12,7 +12,9 @@ const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   price: Yup.number().required('Required').positive('Price must be positive'),
   code: Yup.number().required('Required'),
-  precode: Yup.number().required('Required'),
+  precode: Yup.string()
+    .matches(/^\d{1,6}$/, 'Too long!')
+    .required('Required'),
   pcsGood: Yup.boolean().required('Required'),
   idSection: Yup.number(),
   idTemplate: Yup.number(),
@@ -41,6 +43,22 @@ const EditGoods = ({ product, onClose }) => {
   const productImageId = useId();
   const productWeightId = useId();
   const productTaraWeightId = useId();
+
+  // Функція для зміни роздільника в price
+  const formatPriceWithDot = value => {
+    if (typeof value === 'string') {
+      return value.replace(',', '.');
+    }
+    return value;
+  };
+
+  // Функція для нормалізації числа перед відправкою (щоб було з крапкою)
+  const normalizePrice = value => {
+    if (typeof value === 'string') {
+      return value.replace(',', '.');
+    }
+    return value;
+  };
 
   const {
     name,
@@ -91,13 +109,30 @@ const EditGoods = ({ product, onClose }) => {
   };
 
   const handleSubmit = (values, actions) => {
+    const priceValue =
+      typeof values.price === 'string'
+        ? values.price.replace(',', '.')
+        : values.price;
+
+    const normalizedPrice = parseFloat(priceValue);
+
+    if (isNaN(normalizedPrice) || normalizedPrice <= 0) {
+      alert('Будь ласка, введіть коректну ціну.');
+      return;
+    }
+
     const type = values.pcsGood ? 1 : 'кг';
     const preсode = values.precode;
     if (!isPreCodeUnique(preсode, product)) {
       alert('Такий precode вже існує!!!');
       return;
     }
-    const resultValues = { ...values, image: images, type };
+    const resultValues = {
+      ...values,
+      price: normalizedPrice,
+      image: images,
+      type,
+    };
 
     dispatch(
       updateGoods({
@@ -111,7 +146,10 @@ const EditGoods = ({ product, onClose }) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        ...initialValues,
+        price: formatPriceWithDot(initialValues.price),
+      }}
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
@@ -130,10 +168,19 @@ const EditGoods = ({ product, onClose }) => {
                 {t('description.product.Price')}
               </label>
               <Field
-                type="number"
+                type="text"
                 name="price"
                 id={productPriceId}
                 className={styles['custom-number-input']}
+                onChange={e => {
+                  const value = e.target.value
+                    .replace(/[^\d.]/g, '')
+                    .replace(/(\..*)\..*/g, '$1');
+                  setValues({
+                    ...values,
+                    price: value,
+                  });
+                }}
               />
               <ErrorMessage name="price" component="span" />
             </div>
@@ -191,7 +238,11 @@ const EditGoods = ({ product, onClose }) => {
               <div id={productPcsGoodId}>
                 {t('description.product.PcsGood')}
               </div>
-              <div role="group" aria-labelledby="my-radio-group">
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className={styles['radio-group']}
+              >
                 <label>
                   <Field
                     type="radio"

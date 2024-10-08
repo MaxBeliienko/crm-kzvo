@@ -22,6 +22,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     }
     return pages;
   };
+
+  if (totalPages === 0) {
+    return null;
+  }
   return (
     <div className={styles.pagination}>
       <button

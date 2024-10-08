@@ -30,7 +30,7 @@ export const goodsTableText = {
     AddGoodsFile: 'Add product file',
     SetFile: 'Select a file',
     Name: 'Name',
-    Precode: 'Precode',
+    Precode: 'PLU',
     Price: 'Price',
     Code: 'Code',
     PcsGood: 'Weight/By piece',
@@ -53,10 +53,10 @@ export const goodsTableText = {
     AddGoodsFile: 'Додати файл продуктів',
     SetFile: 'Обрати файл',
     Name: 'Назва',
-    Precode: 'Прекод',
+    Precode: 'PLU',
     Price: 'Ціна',
     Code: 'Код',
-    PcsGood: 'Ваговий/штучний',
+    PcsGood: 'Ваговий/Поштучно',
     ByPiece: 'Поштучно',
     Weighted: 'Ваговий',
     IdSection: 'Id секції',
@@ -71,7 +71,7 @@ export const goodsTableText = {
 export const productText = {
   en: {
     Name: 'Name',
-    Precode: 'Precode',
+    Precode: 'PLU',
     Price: 'Price',
     Code: 'Code',
     PcsGood: 'Weight/By piece',
@@ -91,10 +91,10 @@ export const productText = {
   },
   ukr: {
     Name: 'Назва',
-    Precode: 'Прекод',
+    Precode: 'PLU',
     Price: 'Ціна',
     Code: 'Код',
-    PcsGood: 'Ваговий/штучний',
+    PcsGood: 'Ваговий/Поштучно',
     ByPiece: 'Поштучно',
     Weighted: 'Ваговий',
     IdSection: 'Id секції',
@@ -165,6 +165,7 @@ export const toastText = {
     DeleteCategoryError: 'Failed to delete category!',
     SuccessMessage: 'Success',
     ErrorMessage: 'Error',
+    PrecodeExists: 'A product with such a PLU already exists',
   },
   ukr: {
     AddProduct: 'Товар успішно доданий!',
@@ -183,6 +184,7 @@ export const toastText = {
     DeleteCategoryError: 'Помилка видалення категорії!',
     SuccessMessage: 'Успішно',
     ErrorMessage: 'Помилка',
+    PrecodeExists: 'Товар з таким PLU вже існує',
   },
 };
 
@@ -192,12 +194,20 @@ export const categoriesText = {
     AddButton: 'Add category',
     EditCategory: 'Edit',
     RemoveCategory: 'Remove',
+    Name: 'Name',
+    SectionId: 'Section id (optional)',
+    ParentId: 'Parent category id',
+    Images: 'Images',
   },
   ukr: {
     Title: 'Список категорій',
     AddButton: 'Додати категорію',
     EditCategory: 'Редагувати',
     RemoveCategory: 'Видалити',
+    Name: 'Назва',
+    SectionId: 'Id секції (опціонально)',
+    ParentId: 'Id батьківської категорії',
+    Images: 'Зображення',
   },
 };
 

@@ -20,6 +20,18 @@ export const fetchGoods = createAsyncThunk(
   })
 );
 
+export const fetchGoodsByCategory = createAsyncThunk(
+  'categories/fetchGoodsByCategory',
+  asyncThunkWrapper(
+    async ({ sectionId, databaseId = 1, page = 0, limit = 10 }) => {
+      const response = await axios.get(
+        `/goods/by-section?databaseId=${databaseId}&sectionId=${sectionId}&page=${page}&limit=${limit}`
+      );
+      return response.data;
+    }
+  )
+);
+
 export const addGoods = createAsyncThunk(
   'goods/addGoods',
   asyncThunkWrapper(async ({ databaseId, goodsData }, thunkAPI) => {

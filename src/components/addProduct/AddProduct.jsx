@@ -12,7 +12,9 @@ const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   price: Yup.number().required('Required').positive('Price must be positive'),
   code: Yup.number().required('Required'),
-  precode: Yup.number().required('Required'),
+  precode: Yup.string()
+    .matches(/^\d{1,6}$/, 'Too long!')
+    .required('Required'),
   pcsGood: Yup.boolean().required('Required'),
   idSection: Yup.number(),
   idTemplate: Yup.number(),
@@ -135,7 +137,7 @@ const AddProduct = ({ onClose }) => {
                 id={productPrecodeId}
               />
 
-              <ErrorMessage name="preCode" component="span" />
+              <ErrorMessage name="precode" component="span" />
             </div>
             <div>
               <label htmlFor={productCodeId}>
@@ -302,7 +304,7 @@ const AddProduct = ({ onClose }) => {
                 resetForm();
               }}
             >
-              Reset
+              {t('description.product.Reset')}
             </button>
           </Form>
         );

@@ -8,7 +8,7 @@ import { LuArrowDownWideNarrow } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
 
 const CategoryCard = ({ category }) => {
-  const { name, sectionId } = category;
+  const { name, id } = category;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef(null);
@@ -16,7 +16,7 @@ const CategoryCard = ({ category }) => {
   const { t } = useTranslation();
 
   const handleCategoryClick = () => {
-    navigate(`/categories/${sectionId}`);
+    navigate(`/categories/${id}`);
   };
 
   const toggleMenu = () => {
@@ -45,8 +45,9 @@ const CategoryCard = ({ category }) => {
         className={styles['category-button']}
         onClick={handleCategoryClick}
       >
-        <img src={ukr} alt="" width={100} />
-        {name}
+        <img src={ukr} alt="category-image" className={styles.div2} />
+        <p className={styles.div3}>{name}</p>
+        <p className={styles.div1}>{id}</p>
       </button>
       <div className={styles['menu-container']}>
         <button onClick={toggleMenu}>

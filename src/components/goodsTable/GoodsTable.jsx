@@ -3,15 +3,17 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods, uploadFile } from '../../redux/goods/operations';
-import { fetchGoodsByCategory } from '../../redux/categories/operations';
+import {
+  fetchGoods,
+  fetchGoodsByCategory,
+  uploadFile,
+} from '../../redux/goods/operations';
 import {
   selectGoods,
   selectGoodsLoading,
   selectGoodsError,
   selectTotalCountGoods,
 } from '../../redux/goods/selectors';
-import { selectCategoryGoods } from '../../redux/categories/selectors';
 import { openModal } from '../../redux/modal/slice';
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from 'react-icons/fa';
@@ -31,28 +33,18 @@ const GoodsTable = () => {
   const totalItems = useSelector(selectTotalCountGoods);
   const totalPages = Math.ceil(totalItems / limit);
 
-  // Якщо є sectionId - товари за категорією, якщо ні - усі товари
-  const goods = sectionId
-    ? useSelector(selectCategoryGoods)
-    : useSelector(selectGoods);
+  const goods = useSelector(selectGoods);
 
-  //! Розкоментувати коли будуть запити за окремою категорією
-  // // В залежності від наявності sectionId відправляємо різні запити
-  // useEffect(() => {
-  //   if (sectionId) {
-  //     dispatch(fetchGoodsByCategory({ sectionId }));
-  //   } else {
-  //     dispatch(fetchGoods({ databaseId: 1, page: 0 }));
-  //   }
-  // }, [dispatch, sectionId]);
-
-  //! Потім прибрати
+  // В залежності від наявності sectionId відправляємо різні запити
   useEffect(() => {
-    // Отримання товарів при завантаженні компонента
-    dispatch(
-      fetchGoods({ databaseId: 1, page: currentPage - 1, limit: limit })
-    );
-  }, [dispatch, currentPage, limit]);
+    if (sectionId) {
+      dispatch(fetchGoodsByCategory({ sectionId }));
+    } else {
+      dispatch(
+        fetchGoods({ databaseId: 1, page: currentPage - 1, limit: limit })
+      );
+    }
+  }, [dispatch, currentPage, limit, sectionId]);
 
   const handlePageChange = newPage => setCurrentPage(newPage);
 

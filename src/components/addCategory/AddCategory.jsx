@@ -9,16 +9,19 @@ import { useState, useId } from 'react';
 import { handleFileChange } from '../../utils/handleFileChange';
 import * as Yup from 'yup';
 import styles from './AddCategory.module.css';
+import { useTranslation } from 'react-i18next';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   sectionId: Yup.number().nullable(),
+  parentCategoryId: Yup.number(),
   images: Yup.array().of(Yup.string()),
 });
 
 const initialValues = {
   name: '',
   sectionId: '',
+  parentCategoryId: '',
   images: [],
 };
 
@@ -26,6 +29,8 @@ const AddCategory = ({ onClose }) => {
   const categoryNameId = useId();
   const categorySectionId = useId();
   const categoryImageId = useId();
+  const categoryParentCategoryId = useId();
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -33,13 +38,13 @@ const AddCategory = ({ onClose }) => {
 
   // Перевірка унікальності sectionId
   const isSectionIdUnique = sectionId => {
-    return !categories.some(category => category.sectionId === sectionId);
+    return !categories.some(category => category.id === sectionId);
   };
 
   const [images, setImages] = useState([]);
 
   const handleSubmit = (values, actions) => {
-    let { sectionId, name } = values;
+    let { sectionId, name, parentCategoryId } = values;
     sectionId = sectionId ? parseInt(sectionId, 10) : undefined;
     if (sectionId && !isSectionIdUnique(sectionId)) {
       alert('Такий sectionId вже існує');
@@ -50,7 +55,7 @@ const AddCategory = ({ onClose }) => {
     const resultValues = {
       id: sectionId || undefined,
       name,
-      parentCategoryId: 0,
+      parentCategoryId,
       images: null,
     };
 
@@ -72,12 +77,16 @@ const AddCategory = ({ onClose }) => {
     >
       <Form className={styles.form}>
         <div>
-          <label htmlFor={categoryNameId}>Name</label>
+          <label htmlFor={categoryNameId}>
+            {t('description.categories.Name')}
+          </label>
           <Field type="text" name="name" id={categoryNameId} />
           <ErrorMessage name="name" component="span" />
         </div>
         <div>
-          <label htmlFor={categorySectionId}>Section id (optional)</label>
+          <label htmlFor={categorySectionId}>
+            {t('description.categories.SectionId')}
+          </label>
           <Field
             type="number"
             name="sectionId"
@@ -87,7 +96,21 @@ const AddCategory = ({ onClose }) => {
           <ErrorMessage name="sectionId" component="span" />
         </div>
         <div>
-          <label htmlFor={categoryImageId}>Images</label>
+          <label htmlFor={categoryParentCategoryId}>
+            {t('description.categories.ParentId')}
+          </label>
+          <Field
+            type="number"
+            name="parentCategoryId"
+            id={categoryParentCategoryId}
+            className={styles['custom-number-input']}
+          />
+          <ErrorMessage name="parentCategoryId" component="span" />
+        </div>
+        <div>
+          <label htmlFor={categoryImageId}>
+            {t('description.categories.Images')}
+          </label>
           <Field
             type="file"
             name="images"

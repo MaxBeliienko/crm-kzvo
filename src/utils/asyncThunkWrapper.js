@@ -22,11 +22,20 @@ const asyncThunkWrapper = asyncFunction => async (args, thunkAPI) => {
         : undefined,
     };
 
-    if (thunkAPI.extra?.toast) {
-      thunkAPI.extra.toast.dismiss();
-      thunkAPI.extra.toast.error(
-        thunkAPI.extra.i18n.t('description.toast.ErrorMessage')
-      );
+    if (error.response?.status === 409) {
+      if (thunkAPI.extra?.toast) {
+        thunkAPI.extra.toast.dismiss();
+        thunkAPI.extra.toast.error(
+          `${thunkAPI.extra.i18n.t('description.toast.PrecodeExists')}`
+        );
+      }
+    } else {
+      if (thunkAPI.extra?.toast) {
+        thunkAPI.extra.toast.dismiss();
+        thunkAPI.extra.toast.error(
+          thunkAPI.extra.i18n.t('description.toast.ErrorMessage')
+        );
+      }
     }
 
     return thunkAPI.rejectWithValue(serializableError);

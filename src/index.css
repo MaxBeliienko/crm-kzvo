@@ -1,6 +1,7 @@
-/* * {
-  border: 1px solid black;
-} */
+* {
+  /* border: 1px solid black; */
+  box-sizing: border-box;
+}
 body {
   font-family: 'Sarabun', sans-serif;
   background-color: #fefffc;

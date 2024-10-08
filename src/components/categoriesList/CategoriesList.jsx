@@ -39,7 +39,10 @@ const CategoriesList = () => {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
-        <button onClick={() => handleAction('addCategory')}>
+        <button
+          className={styles['add-cat-button']}
+          onClick={() => handleAction('addCategory')}
+        >
           {t('description.categories.AddButton')}
         </button>
       </div>

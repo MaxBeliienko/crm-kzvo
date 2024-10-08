@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchGoods,
+  fetchGoodsByCategory,
   addGoods,
   updateGoods,
   deleteGoods,
@@ -34,6 +35,14 @@ const goodsSlice = createSlice({
         state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchGoods.rejected, handleRejected)
+      .addCase(fetchGoodsByCategory.pending, handlePending)
+      .addCase(fetchGoodsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.goods = action.payload.goods;
+        state.totalCount = action.payload.totalCount;
+      })
+      .addCase(fetchGoodsByCategory.rejected, handleRejected)
       .addCase(addGoods.pending, handlePending)
       .addCase(addGoods.fulfilled, (state, action) => {
         state.loading = false;

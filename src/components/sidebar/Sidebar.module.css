@@ -4,6 +4,7 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 50px;
   align-items: start;
   padding: 36px 0 78px 28px;
