@@ -22,8 +22,8 @@ const FeedbackSchema = Yup.object().shape({
   description: Yup.string(),
   before_validity: Yup.number(),
   type: Yup.string(),
-  // image: Yup.array().of(Yup.string()),
-  image: Yup.string(),
+  image: Yup.array().of(Yup.string()),
+  // image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
@@ -89,7 +89,7 @@ const EditGoods = ({ product, onClose }) => {
     description: description || '',
     before_validity: before_validity,
     type: type,
-    image: image || '',
+    image: '',
     weight: weight,
     taraWeight: taraWeight,
   };
@@ -310,7 +310,7 @@ const EditGoods = ({ product, onClose }) => {
               <Field type="text" name="type" id={productTypeId} />
               <ErrorMessage name="type" component="span" />
             </div>
-            {/* <div>
+            <div>
               <label htmlFor={productImageId}>
                 {t('description.product.Image')}
               </label>
@@ -322,15 +322,8 @@ const EditGoods = ({ product, onClose }) => {
                 onChange={event => handleFileChange(event, setImages)}
               />
               <ErrorMessage name="image" component="span" />
-            </div> */}
-            <div>
-              <label htmlFor={productImageId}>
-                {t('description.product.Image')}
-              </label>
-              <Field type="text" name="image" id={productImageId} />
-              <ErrorMessage name="image" component="span" />
             </div>
-            <div style={{ display: 'none' }}>
+            {/* <div style={{ display: 'none' }}>
               {images.map((img, index) => (
                 <img
                   key={index}
@@ -339,7 +332,7 @@ const EditGoods = ({ product, onClose }) => {
                   style={{ width: '100px', height: '100px' }}
                 />
               ))}
-            </div>
+            </div> */}
             <div>
               <label htmlFor={productWeightId}>
                 {t('description.product.Weight')}

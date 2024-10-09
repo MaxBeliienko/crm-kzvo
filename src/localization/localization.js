@@ -42,6 +42,7 @@ export const goodsTableText = {
     View: 'View',
     Edit: 'Edit',
     Remove: 'Remove',
+    NoGoods: 'There are no goods',
   },
   ukr: {
     Header: 'Усі товари',
@@ -65,6 +66,7 @@ export const goodsTableText = {
     View: 'Переглянути',
     Edit: 'Редагувати',
     Remove: 'Видалити',
+    NoGoods: 'Товари відсутні',
   },
 };
 

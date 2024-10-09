@@ -18,6 +18,7 @@ import { openModal } from '../../redux/modal/slice';
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from 'react-icons/fa';
 import Pagination from '../pagination/Pagination';
+import { toast } from 'react-toastify';
 
 const GoodsTable = () => {
   const { sectionId } = useParams();
@@ -45,6 +46,13 @@ const GoodsTable = () => {
       );
     }
   }, [dispatch, currentPage, limit, sectionId]);
+
+  // Відображення помилки
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(error.message || 'Something went wrong!');
+  //   }
+  // }, [error]);
 
   const handlePageChange = newPage => setCurrentPage(newPage);
 
@@ -133,8 +141,8 @@ const GoodsTable = () => {
 
   if (loading) {
     content = <p>Loading...</p>;
-  } else if (error) {
-    content = <p>Error: {error.message || 'Something went wrong'}</p>;
+  } else if (!goods.length) {
+    content = <p>{t('description.goodsTable.NoGoods')}</p>;
   } else {
     content = (
       <table>

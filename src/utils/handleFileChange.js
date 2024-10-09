@@ -7,16 +7,7 @@ export const convertToBase64 = file => {
   });
 };
 
-// export const handleFileChange = async (event, setImages) => {
-//   const files = event.currentTarget.files;
-//   if (files && files.length > 0) {
-//     const base64Images = await Promise.all(
-//       Array.from(files).map(file => convertToBase64(file))
-//     );
-//     setImages(prevImages => [...prevImages, ...base64Images]);
-//   }
-// };
-
+// Перекодування в Base64
 export const handleFileChange = async (event, setImages) => {
   const files = event.currentTarget.files;
   if (files && files.length > 0) {
@@ -31,15 +22,20 @@ export const handleFileChange = async (event, setImages) => {
   }
 };
 
-// export const handleFileChange = async (event, setImage) => {
+// Збереження у форматі масиву байтів
+// export const handleFileChange = async (event, setImages) => {
 //   const files = event.currentTarget.files;
 //   if (files && files.length > 0) {
-//     const base64String = await convertToBase64(files[0]); // Зберігаємо лише перше зображення
-//     // Видаляємо префікс data:image/png;base64, або data:image/jpeg;base64,
-//     const imageWithoutPrefix = base64String.replace(
-//       /^data:image\/[a-z]+;base64,/,
-//       ''
+//     const byteArrays = await Promise.all(
+//       Array.from(files).map(file => {
+//         return new Promise((resolve, reject) => {
+//           const reader = new FileReader();
+//           reader.readAsArrayBuffer(file); // Читаємо файл як ArrayBuffer
+//           reader.onload = () => resolve(new Uint8Array(reader.result)); // Конвертуємо в Uint8Array
+//           reader.onerror = error => reject(error);
+//         });
+//       })
 //     );
-//     setImage(imageWithoutPrefix); // Зберігаємо рядок без префікса
+//     setImages(prevImages => [...prevImages, ...byteArrays]); // Зберігаємо масиви байтів
 //   }
 // };

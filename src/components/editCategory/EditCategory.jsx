@@ -31,7 +31,7 @@ const EditCategory = ({ onClose, category }) => {
   const initialValues = {
     name: name,
     sectionId: id,
-    parentCategoryId: parentCategoryId,
+    parentCategoryId: parentCategoryId || 0,
     images: [],
   };
 

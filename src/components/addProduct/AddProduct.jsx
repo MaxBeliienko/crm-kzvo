@@ -93,6 +93,38 @@ const AddProduct = ({ onClose }) => {
     onClose();
   };
 
+  //! Спроба реалізації через FormData (не працює)
+  // const handleSubmit = (values, actions) => {
+  //   const preсode = values.precode;
+  //   if (!isPreCodeUnique(preсode)) {
+  //     alert('Такий precode вже існує!!!');
+  //     return;
+  //   }
+
+  //   const type = values.pcsGood ? 1 : 'кг';
+
+  //   // Підготовка даних для відправки на сервер
+  //   const formData = new FormData();
+  //   Object.keys(values).forEach(key => {
+  //     if (key !== 'image') {
+  //       formData.append(key, values[key]);
+  //     }
+  //   });
+
+  //   // Додаємо зображення в форматі BLOB
+  //   images.forEach((byteArray, index) => {
+  //     const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Вказати правильний тип
+  //     formData.append(`image[${index}]`, blob, `image_${index}.jpeg`); // Ім'я файлу
+  //   });
+  //   console.log(formData);
+
+  //   // Відправка даних на сервер
+  //   dispatch(addGoods({ databaseId: 1, goodsData: formData }));
+
+  //   localStorage.removeItem('addProductForm');
+  //   onClose();
+  // };
+
   return (
     <Formik
       initialValues={loadSavedValues()}
