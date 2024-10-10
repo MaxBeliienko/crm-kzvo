@@ -4,7 +4,8 @@ import createSerializableError from '../../utils/serializableError';
 import asyncThunkWrapper from '../../utils/asyncThunkWrapper';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'http://localhost:8080/api';
+// axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.baseURL = 'http://192.168.0.135:8080/api';
 
 export const fetchGoods = createAsyncThunk(
   'goods/fetchGoods',
@@ -34,24 +35,31 @@ export const fetchGoodsByCategory = createAsyncThunk(
 
 export const addGoods = createAsyncThunk(
   'goods/addGoods',
-  asyncThunkWrapper(async ({ databaseId, goodsData }, thunkAPI) => {
-    const response = await axios.post(
-      `/goods?databaseId=${databaseId}`,
-      goodsData
-    );
-    return response.data;
-  })
+  asyncThunkWrapper(
+    async ({ databaseId, goodsData, imageBase64 }, thunkAPI) => {
+      const response = await axios.post(`/goods?databaseId=${databaseId}`, {
+        goodsData,
+        imageBase64,
+      });
+      return response.data;
+    }
+  )
 );
 
 export const updateGoods = createAsyncThunk(
   'goods/updateGoods',
-  asyncThunkWrapper(async ({ databaseId, goodsId, goodsData }, thunkAPI) => {
-    const response = await axios.put(
-      `/goods/${goodsId}?databaseId=${databaseId}`,
-      goodsData
-    );
-    return response.data;
-  })
+  asyncThunkWrapper(
+    async ({ databaseId, goodsId, goodsData, imageBase64 }, thunkAPI) => {
+      const response = await axios.put(
+        `/goods/${goodsId}?databaseId=${databaseId}`,
+        {
+          goodsData,
+          imageBase64,
+        }
+      );
+      return response.data;
+    }
+  )
 );
 
 export const deleteGoods = createAsyncThunk(

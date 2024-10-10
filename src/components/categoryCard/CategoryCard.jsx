@@ -1,19 +1,21 @@
 import styles from './CategoryCard.module.css';
-import ukr from '../../images/ukraine.png';
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/modal/slice';
 import { LuArrowDownWideNarrow } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
+import noImage from '../../images/noImage.png';
 
 const CategoryCard = ({ category }) => {
-  const { name, id } = category;
+  const { name, id, image } = category;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
+
+  const imageSrc = image ? `data:image/jpeg;base64,${image}` : noImage;
 
   const handleCategoryClick = () => {
     navigate(`/categories/${id}`);
@@ -45,7 +47,7 @@ const CategoryCard = ({ category }) => {
         className={styles['category-button']}
         onClick={handleCategoryClick}
       >
-        <img src={ukr} alt="category-image" className={styles.div2} />
+        <img src={imageSrc} alt="category-image" className={styles.div2} />
         <p className={styles.div3}>{name}</p>
         <p className={styles.div1}>{id}</p>
       </button>

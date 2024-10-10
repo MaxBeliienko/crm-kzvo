@@ -22,20 +22,25 @@ export const handleFileChange = async (event, setImages) => {
   }
 };
 
-// Збереження у форматі масиву байтів
-// export const handleFileChange = async (event, setImages) => {
-//   const files = event.currentTarget.files;
-//   if (files && files.length > 0) {
-//     const byteArrays = await Promise.all(
-//       Array.from(files).map(file => {
-//         return new Promise((resolve, reject) => {
-//           const reader = new FileReader();
-//           reader.readAsArrayBuffer(file); // Читаємо файл як ArrayBuffer
-//           reader.onload = () => resolve(new Uint8Array(reader.result)); // Конвертуємо в Uint8Array
-//           reader.onerror = error => reject(error);
-//         });
-//       })
-//     );
-//     setImages(prevImages => [...prevImages, ...byteArrays]); // Зберігаємо масиви байтів
-//   }
-// };
+// Перевірка валідності Base64
+export const isValidBase64 = base64String => {
+  const base64Regex =
+    /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/;
+
+  // Перевірка на формат
+  if (!base64Regex.test(base64String)) {
+    return false;
+  }
+
+  try {
+    // Декодуємо Base64
+    const decodedString = atob(base64String);
+
+    // Якщо декодування проходить, можемо перевірити його довжину
+    const isValid = decodedString.length > 50;
+    return isValid;
+  } catch (e) {
+    // Якщо сталася помилка при декодуванні, то Base64 не валідний
+    return false;
+  }
+};

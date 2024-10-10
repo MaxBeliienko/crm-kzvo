@@ -15,7 +15,6 @@ const FeedbackSchema = Yup.object().shape({
   precode: Yup.string()
     .matches(/^\d{1,6}$/, 'Too long!')
     .required('Required'),
-  pcsGood: Yup.boolean().required('Required'),
   idSection: Yup.number(),
   idTemplate: Yup.number(),
   barcodeCoding: Yup.string(),
@@ -23,7 +22,6 @@ const FeedbackSchema = Yup.object().shape({
   before_validity: Yup.number(),
   type: Yup.string(),
   image: Yup.array().of(Yup.string()),
-  // image: Yup.string(),
   weight: Yup.number(),
   taraWeight: Yup.number(),
 });
@@ -33,7 +31,6 @@ const EditGoods = ({ product, onClose }) => {
   const productPriceId = useId();
   const productCodeId = useId();
   const productPrecodeId = useId();
-  const productPcsGoodId = useId();
   const productIdSectionId = useId();
   const productIdTemplateId = useId();
   const productBarcodeCodingId = useId();
@@ -64,7 +61,6 @@ const EditGoods = ({ product, onClose }) => {
     name,
     precode,
     price,
-    image,
     weight,
     taraWeight,
     code,
@@ -82,7 +78,6 @@ const EditGoods = ({ product, onClose }) => {
     price: price,
     code: code,
     precode: precode,
-    pcsGood: pcsGood,
     idSection: idSection,
     idTemplate: idTemplate,
     barcodeCoding: barcodeCoding,
@@ -121,7 +116,6 @@ const EditGoods = ({ product, onClose }) => {
       return;
     }
 
-    const type = values.pcsGood ? 1 : 'кг';
     const preсode = values.precode;
     if (!isPreCodeUnique(preсode, product)) {
       alert('Такий precode вже існує!!!');
@@ -130,15 +124,15 @@ const EditGoods = ({ product, onClose }) => {
     const resultValues = {
       ...values,
       price: normalizedPrice,
-      image: images,
-      type,
+      image: null,
     };
 
     dispatch(
       updateGoods({
-        databaseId: 1,
+        databaseId: 9,
         goodsId: product.id,
         goodsData: resultValues,
+        imageBase64: images[0],
       })
     );
     onClose();
@@ -235,39 +229,6 @@ const EditGoods = ({ product, onClose }) => {
               <ErrorMessage name="idTemplate" component="span" />
             </div>
             <div>
-              <div id={productPcsGoodId}>
-                {t('description.product.PcsGood')}
-              </div>
-              <div
-                role="group"
-                aria-labelledby="my-radio-group"
-                className={styles['radio-group']}
-              >
-                <label>
-                  <Field
-                    type="radio"
-                    name="pcsGood"
-                    value="false"
-                    checked={values.pcsGood === false}
-                    onChange={() => setValues({ ...values, pcsGood: false })}
-                  />
-                  {t('description.product.Weighted')}
-                </label>
-                <label htmlFor={`${productPcsGoodId}-piece`}>
-                  <Field
-                    type="radio"
-                    name="pcsGood"
-                    id={`${productPcsGoodId}-piece`}
-                    value="true"
-                    checked={values.pcsGood === true}
-                    onChange={() => setValues({ ...values, pcsGood: true })}
-                  />
-                  {t('description.product.ByPiece')}
-                </label>
-              </div>
-              <ErrorMessage name="pcsGood" component="span" />
-            </div>
-            <div>
               <label htmlFor={productBarcodeCodingId}>
                 {t('description.product.Barcode')}
               </label>
@@ -304,10 +265,34 @@ const EditGoods = ({ product, onClose }) => {
               <ErrorMessage name="before_validity" component="span" />
             </div>
             <div>
-              <label htmlFor={productTypeId}>
-                {t('description.product.Type')}
-              </label>
-              <Field type="text" name="type" id={productTypeId} />
+              <div id={productTypeId}>{t('description.product.Type')}</div>
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className={styles['radio-group']}
+              >
+                <label>
+                  <Field
+                    type="radio"
+                    name="type"
+                    value="кг"
+                    checked={values.type === 'кг'}
+                    onChange={() => setFieldValue('type', 'кг')}
+                  />
+                  {t('description.product.Weighted')}
+                </label>
+                <label htmlFor={`${productTypeId}-piece`}>
+                  <Field
+                    type="radio"
+                    name="type"
+                    id={`${productTypeId}-piece`}
+                    value="1"
+                    checked={values.type === '1'}
+                    onChange={() => setFieldValue('type', '1')}
+                  />
+                  {t('description.product.ByPiece')}
+                </label>
+              </div>
               <ErrorMessage name="type" component="span" />
             </div>
             <div>
@@ -323,16 +308,6 @@ const EditGoods = ({ product, onClose }) => {
               />
               <ErrorMessage name="image" component="span" />
             </div>
-            {/* <div style={{ display: 'none' }}>
-              {images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`preview-${index}`}
-                  style={{ width: '100px', height: '100px' }}
-                />
-              ))}
-            </div> */}
             <div>
               <label htmlFor={productWeightId}>
                 {t('description.product.Weight')}

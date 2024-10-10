@@ -90,6 +90,7 @@ export const productText = {
     TaraWeight: 'TaraWeight',
     Submit: 'Submit',
     Reset: 'Reset',
+    NoImage: 'Image is missing',
   },
   ukr: {
     Name: 'Назва',
@@ -110,6 +111,7 @@ export const productText = {
     TaraWeight: 'Вага тари',
     Submit: 'Відправити',
     Reset: 'Скинути',
+    NoImage: 'Зображення відсутнє',
   },
 };
 

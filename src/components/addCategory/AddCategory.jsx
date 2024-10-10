@@ -51,20 +51,27 @@ const AddCategory = ({ onClose }) => {
       return;
     }
 
-    // const resultValues = { ...values, images: images };
     const resultValues = {
       id: sectionId || undefined,
       name,
       parentCategoryId,
-      images: null,
+      image: null,
     };
 
     if (sectionId) {
       dispatch(
-        addCategoryWithId({ categoryData: { ...resultValues, id: sectionId } })
+        addCategoryWithId({
+          categoryData: {
+            ...resultValues,
+            id: sectionId,
+          },
+          imageBase64: images[0],
+        })
       );
     } else {
-      dispatch(addCategory({ categoryData: resultValues }));
+      dispatch(
+        addCategory({ categoryData: resultValues, imageBase64: images[0] })
+      );
     }
     onClose();
   };

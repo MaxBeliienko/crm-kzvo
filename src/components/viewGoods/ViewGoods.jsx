@@ -1,5 +1,7 @@
 import styles from './ViewGoods.module.css';
 import { useTranslation } from 'react-i18next';
+import noImage from '../../images/noImage.png';
+import { isValidBase64 } from '../../utils/handleFileChange';
 
 const ViewGoods = ({ product }) => {
   const {
@@ -21,10 +23,14 @@ const ViewGoods = ({ product }) => {
 
   const { t } = useTranslation();
 
+  // Формуємо повний src для img із base64
+  const imageSrc =
+    image && isValidBase64(image) ? `data:image/jpeg;base64,${image}` : noImage;
+
   return (
     <div className={styles['view-goods-container']}>
       <div className={styles['div1']}>
-        <img className={styles['view-goods-image']} src={image} alt={name} />
+        <img className={styles['view-goods-image']} src={imageSrc} alt={name} />
       </div>
       <div className={styles['div2']}>
         <h3>{name}</h3>

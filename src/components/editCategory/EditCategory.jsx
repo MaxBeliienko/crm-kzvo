@@ -55,13 +55,14 @@ const EditCategory = ({ onClose, category }) => {
       id: sectionId || id,
       name,
       parentCategoryId,
-      images: null,
+      image: null,
     };
     dispatch(
       updateCategory({
-        databaseId: 1,
+        databaseId: 9,
         sectionId: id,
         categoryData: resultValues,
+        imageBase64: images[0],
       })
     );
     onClose();

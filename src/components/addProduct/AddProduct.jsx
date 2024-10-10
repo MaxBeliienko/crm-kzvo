@@ -15,10 +15,9 @@ const FeedbackSchema = Yup.object().shape({
   precode: Yup.string()
     .matches(/^\d{1,6}$/, 'Too long!')
     .required('Required'),
-  pcsGood: Yup.boolean().required('Required'),
   idSection: Yup.number(),
   idTemplate: Yup.number(),
-  barcodeCoding: Yup.string(),
+  barcodeCoding: Yup.string().required('Required'),
   description: Yup.string(),
   before_validity: Yup.number(),
   type: Yup.string(),
@@ -32,13 +31,12 @@ const initialValues = {
   price: 0,
   code: 0,
   precode: 0,
-  pcsGood: false,
   idSection: 0,
   idTemplate: 0,
   barcodeCoding: '',
   description: '',
   before_validity: 0,
-  type: '',
+  type: 'кг',
   image: [],
   weight: 1,
   taraWeight: 0,
@@ -49,7 +47,6 @@ const AddProduct = ({ onClose }) => {
   const productPriceId = useId();
   const productCodeId = useId();
   const productPrecodeId = useId();
-  const productPcsGoodId = useId();
   const productIdSectionId = useId();
   const productIdTemplateId = useId();
   const productBarcodeCodingId = useId();
@@ -86,44 +83,17 @@ const AddProduct = ({ onClose }) => {
       alert('Такий precode вже існує!!!');
       return;
     }
-    const type = values.pcsGood ? 1 : 'кг';
-    const resultValues = { ...values, image: images, type };
-    dispatch(addGoods({ databaseId: 1, goodsData: resultValues }));
+    const resultValues = { ...values, image: null };
+    dispatch(
+      addGoods({
+        databaseId: 9,
+        goodsData: resultValues,
+        imageBase64: images[0],
+      })
+    );
     localStorage.removeItem('addProductForm');
     onClose();
   };
-
-  //! Спроба реалізації через FormData (не працює)
-  // const handleSubmit = (values, actions) => {
-  //   const preсode = values.precode;
-  //   if (!isPreCodeUnique(preсode)) {
-  //     alert('Такий precode вже існує!!!');
-  //     return;
-  //   }
-
-  //   const type = values.pcsGood ? 1 : 'кг';
-
-  //   // Підготовка даних для відправки на сервер
-  //   const formData = new FormData();
-  //   Object.keys(values).forEach(key => {
-  //     if (key !== 'image') {
-  //       formData.append(key, values[key]);
-  //     }
-  //   });
-
-  //   // Додаємо зображення в форматі BLOB
-  //   images.forEach((byteArray, index) => {
-  //     const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Вказати правильний тип
-  //     formData.append(`image[${index}]`, blob, `image_${index}.jpeg`); // Ім'я файлу
-  //   });
-  //   console.log(formData);
-
-  //   // Відправка даних на сервер
-  //   dispatch(addGoods({ databaseId: 1, goodsData: formData }));
-
-  //   localStorage.removeItem('addProductForm');
-  //   onClose();
-  // };
 
   return (
     <Formik
@@ -131,7 +101,7 @@ const AddProduct = ({ onClose }) => {
       validationSchema={FeedbackSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, setValues, resetForm }) => {
+      {({ values, setFieldValue, resetForm }) => {
         // Зберігаємо дані в localStorage при зміні полів
         useEffect(() => {
           localStorage.setItem('addProductForm', JSON.stringify(values));
@@ -208,39 +178,6 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="idTemplate" component="span" />
             </div>
             <div>
-              <div id={productPcsGoodId}>
-                {t('description.product.PcsGood')}
-              </div>
-              <div
-                role="group"
-                aria-labelledby="my-radio-group"
-                className={styles['radio-group']}
-              >
-                <label>
-                  <Field
-                    type="radio"
-                    name="pcsGood"
-                    value="false"
-                    checked={values.pcsGood === false}
-                    onChange={() => setValues({ ...values, pcsGood: false })}
-                  />
-                  {t('description.product.Weighted')}
-                </label>
-                <label htmlFor={`${productPcsGoodId}-piece`}>
-                  <Field
-                    type="radio"
-                    name="pcsGood"
-                    id={`${productPcsGoodId}-piece`}
-                    value="true"
-                    checked={values.pcsGood === true}
-                    onChange={() => setValues({ ...values, pcsGood: true })}
-                  />
-                  {t('description.product.ByPiece')}
-                </label>
-              </div>
-              <ErrorMessage name="pcsGood" component="span" />
-            </div>
-            <div>
               <label htmlFor={productBarcodeCodingId}>
                 {t('description.product.Barcode')}
               </label>
@@ -276,12 +213,37 @@ const AddProduct = ({ onClose }) => {
               <ErrorMessage name="before_validity" component="span" />
             </div>
             <div>
-              <label htmlFor={productTypeId}>
-                {t('description.product.Type')}
-              </label>
-              <Field type="text" name="type" id={productTypeId} />
+              <div id={productTypeId}>{t('description.product.Type')}</div>
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className={styles['radio-group']}
+              >
+                <label>
+                  <Field
+                    type="radio"
+                    name="type"
+                    value="кг"
+                    checked={values.type === 'кг'}
+                    onChange={() => setFieldValue('type', 'кг')}
+                  />
+                  {t('description.product.Weighted')}
+                </label>
+                <label htmlFor={`${productTypeId}-piece`}>
+                  <Field
+                    type="radio"
+                    name="type"
+                    id={`${productTypeId}-piece`}
+                    value="1"
+                    checked={values.type === '1'}
+                    onChange={() => setFieldValue('type', '1')}
+                  />
+                  {t('description.product.ByPiece')}
+                </label>
+              </div>
               <ErrorMessage name="type" component="span" />
             </div>
+
             <div>
               <label htmlFor={productImageId}>
                 {t('description.product.Image')}

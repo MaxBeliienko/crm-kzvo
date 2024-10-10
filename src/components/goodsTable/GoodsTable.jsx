@@ -18,7 +18,6 @@ import { openModal } from '../../redux/modal/slice';
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from 'react-icons/fa';
 import Pagination from '../pagination/Pagination';
-import { toast } from 'react-toastify';
 
 const GoodsTable = () => {
   const { sectionId } = useParams();
@@ -42,28 +41,16 @@ const GoodsTable = () => {
       dispatch(fetchGoodsByCategory({ sectionId }));
     } else {
       dispatch(
-        fetchGoods({ databaseId: 1, page: currentPage - 1, limit: limit })
+        fetchGoods({ databaseId: 9, page: currentPage - 1, limit: limit })
       );
     }
   }, [dispatch, currentPage, limit, sectionId]);
-
-  // Відображення помилки
-  // useEffect(() => {
-  //   if (error) {
-  //     toast.error(error.message || 'Something went wrong!');
-  //   }
-  // }, [error]);
 
   const handlePageChange = newPage => setCurrentPage(newPage);
 
   const handleLimitChange = event => {
     setLimit(Number(event.target.value));
     setCurrentPage(1);
-  };
-
-  // Функція для перетворення Base64 в URL зображення
-  const base64ToImageUrl = base64String => {
-    return `data:image/jpeg;base64,${base64String}`;
   };
 
   // Логіка пошуку
@@ -128,7 +115,7 @@ const GoodsTable = () => {
   };
   const handleFileUpload = async () => {
     if (file) {
-      const result = await dispatch(uploadFile({ databaseId: 1, file }));
+      const result = await dispatch(uploadFile({ databaseId: 9, file }));
       if (!result.error) {
         window.location.reload();
       }
