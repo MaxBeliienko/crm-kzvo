@@ -12,7 +12,7 @@ export const fetchAllDatabase = createAsyncThunk(
 
 export const fetchDatabaseById = createAsyncThunk(
   'devices/fetchDatabaseById',
-  asyncThunkWrapper(async ({ databaseId }) => {
+  asyncThunkWrapper(async ({ databaseId = 1 }) => {
     const response = await axios.get(`/connections/${databaseId}`);
     return response.data;
   })
@@ -20,7 +20,7 @@ export const fetchDatabaseById = createAsyncThunk(
 
 export const updateDatabaseById = createAsyncThunk(
   'devices/updateDatabaseById',
-  asyncThunkWrapper(async ({ databaseId, databaseData }) => {
+  asyncThunkWrapper(async ({ databaseId = 1, databaseData }) => {
     const response = await axios.put(
       `/connections/${databaseId}`,
       databaseData
@@ -39,7 +39,7 @@ export const addDatabaseConnection = createAsyncThunk(
 
 export const deleteDatabaseConnection = createAsyncThunk(
   'devices/deleteDatabaseConnection',
-  asyncThunkWrapper(async ({ databaseId }) => {
+  asyncThunkWrapper(async ({ databaseId = 1 }) => {
     await axios.delete(`/connections/${databaseId}`);
     return databaseId;
   })
@@ -47,7 +47,7 @@ export const deleteDatabaseConnection = createAsyncThunk(
 
 export const addColumnModel = createAsyncThunk(
   'devices/addColumnModel',
-  asyncThunkWrapper(async ({ databaseId }) => {
+  asyncThunkWrapper(async ({ databaseId = 1 }) => {
     const response = await axios.post(`/connections/${databaseId}/columns`);
     return response;
   })

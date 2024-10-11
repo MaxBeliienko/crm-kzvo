@@ -40,9 +40,7 @@ const GoodsTable = () => {
     if (sectionId) {
       dispatch(fetchGoodsByCategory({ sectionId }));
     } else {
-      dispatch(
-        fetchGoods({ databaseId: 9, page: currentPage - 1, limit: limit })
-      );
+      dispatch(fetchGoods({ page: currentPage - 1, limit: limit }));
     }
   }, [dispatch, currentPage, limit, sectionId]);
 

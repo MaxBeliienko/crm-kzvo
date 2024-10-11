@@ -14,7 +14,7 @@ const CategoriesList = () => {
 
   // Запит для отримання категорій
   useEffect(() => {
-    dispatch(fetchCategories({ databaseId: 9 }));
+    dispatch(fetchCategories({ databaseId: 1 }));
   }, [dispatch]);
 
   // Логіка пошуку

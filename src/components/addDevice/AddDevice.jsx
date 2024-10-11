@@ -39,8 +39,6 @@ const AddDevice = ({ onClose }) => {
       ],
     };
 
-    console.log('Дані для відправки:', dataToSend);
-
     dispatch(addDatabaseConnection({ databaseData: dataToSend }));
     onClose();
   };

@@ -9,16 +9,18 @@ axios.defaults.baseURL = 'http://192.168.0.135:8080/api';
 
 export const fetchGoods = createAsyncThunk(
   'goods/fetchGoods',
-  asyncThunkWrapper(async ({ databaseId, page = 0, limit = 10 }, thunkAPI) => {
-    const response = await axios.get('/goods', {
-      params: {
-        databaseId,
-        page,
-        limit,
-      },
-    });
-    return response.data;
-  })
+  asyncThunkWrapper(
+    async ({ databaseId = 1, page = 0, limit = 10 }, thunkAPI) => {
+      const response = await axios.get('/goods', {
+        params: {
+          databaseId,
+          page,
+          limit,
+        },
+      });
+      return response.data;
+    }
+  )
 );
 
 export const fetchGoodsByCategory = createAsyncThunk(
@@ -36,7 +38,7 @@ export const fetchGoodsByCategory = createAsyncThunk(
 export const addGoods = createAsyncThunk(
   'goods/addGoods',
   asyncThunkWrapper(
-    async ({ databaseId, goodsData, imageBase64 }, thunkAPI) => {
+    async ({ databaseId = 1, goodsData, imageBase64 }, thunkAPI) => {
       const response = await axios.post(`/goods?databaseId=${databaseId}`, {
         goodsData,
         imageBase64,
@@ -49,7 +51,7 @@ export const addGoods = createAsyncThunk(
 export const updateGoods = createAsyncThunk(
   'goods/updateGoods',
   asyncThunkWrapper(
-    async ({ databaseId, goodsId, goodsData, imageBase64 }, thunkAPI) => {
+    async ({ databaseId = 1, goodsId, goodsData, imageBase64 }, thunkAPI) => {
       const response = await axios.put(
         `/goods/${goodsId}?databaseId=${databaseId}`,
         {
@@ -64,7 +66,7 @@ export const updateGoods = createAsyncThunk(
 
 export const deleteGoods = createAsyncThunk(
   'goods/deleteGoods',
-  asyncThunkWrapper(async ({ databaseId, goodsId }, thunkAPI) => {
+  asyncThunkWrapper(async ({ databaseId = 1, goodsId }, thunkAPI) => {
     await axios.delete(`/goods/${goodsId}?databaseId=${databaseId}`);
     return goodsId;
   })
@@ -75,7 +77,7 @@ export const uploadFile = createAsyncThunk(
   asyncThunkWrapper(
     async (
       {
-        databaseId,
+        databaseId = 1,
         file,
         columnsJson = 'code;pre_code;id_scales;id_sections;id_templates;id_barcodes;name;price;type;data',
         skipHeader = true,

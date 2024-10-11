@@ -8,7 +8,7 @@ const RemoveGoods = ({ product, onClose }) => {
   const { t } = useTranslation();
 
   const handleRemove = () => {
-    dispatch(deleteGoods({ databaseId: 1, goodsId: product.id }));
+    dispatch(deleteGoods({ goodsId: product.id }));
     onClose();
   };
 

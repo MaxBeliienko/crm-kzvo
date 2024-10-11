@@ -86,7 +86,6 @@ const AddProduct = ({ onClose }) => {
     const resultValues = { ...values, image: null };
     dispatch(
       addGoods({
-        databaseId: 9,
         goodsData: resultValues,
         imageBase64: images[0],
       })
